@@ -14,22 +14,22 @@ Monitors changes to GCP VPC firewall rules that control network access to resour
 
 ```sql
 from cloud.gcp.audit
-where protoPayload.methodName in ("v1.compute.firewalls.insert",
+select eventdate
+select protoPayload.authenticationInfo.principalEmail as modifier
+select protoPayload.methodName as action
+select protoPayload.resourceName as firewall_rule
+select protoPayload.request.sourceRanges
+select protoPayload.request.allowed
+select protoPayload.request.denied
+select protoPayload.request.priority
+select protoPayload.requestMetadata.callerIp as source_ip
+select resource.labels.project_id
+where `in`("v1.compute.firewalls.insert",
                                    "v1.compute.firewalls.patch",
                                    "v1.compute.firewalls.update",
-                                   "v1.compute.firewalls.delete")
+                                   "v1.compute.firewalls.delete", protoPayload.methodName)
   and (protoPayload.status.code is null or protoPayload.status.code = 0)
-select
-  eventdate,
-  protoPayload.authenticationInfo.principalEmail as modifier,
-  protoPayload.methodName as action,
-  protoPayload.resourceName as firewall_rule,
-  protoPayload.request.sourceRanges,
-  protoPayload.request.allowed,
-  protoPayload.request.denied,
-  protoPayload.request.priority,
-  protoPayload.requestMetadata.callerIp as source_ip,
-  resource.labels.project_id
+
 group by modifier, firewall_rule, action
 ```
 

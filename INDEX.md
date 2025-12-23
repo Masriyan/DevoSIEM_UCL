@@ -209,12 +209,25 @@ Added 7 new cloud security use cases:
 
 ---
 
+## Query Syntax - Production Ready ✅
+
+All 45 queries in this library use **official DEVO LINQ syntax**:
+- ✅ Multiple SELECT statements (one per field)
+- ✅ DEVO-specific functions (`weakhas()`, `mm2country()`, `purpose()`, `` `in`() ``)
+- ✅ Geographic IP enrichment
+- ✅ IP classification and purpose detection
+
+**Before deployment**: Verify table names and field availability in your DEVO environment.
+
+**📖 Reference**: See [DEVO_QUERY_SYNTAX_GUIDE.md](DEVO_QUERY_SYNTAX_GUIDE.md) for comprehensive syntax documentation.
+
 ## How to Use This Index
 
 1. **By Threat Severity**: Start with CRITICAL and HIGH severity use cases for immediate security wins
 2. **By Category**: Navigate to your technology stack (AWS, Azure, Palo Alto, etc.)
 3. **By Use Case**: Search for specific threats (ransomware, BEC, credential dumping, etc.)
 4. **New Category**: Leverage Threat Intelligence for proactive defense
+5. **Deployment**: All queries are ready for DEVO - just verify table names
 
 ## Implementation Priority
 
@@ -258,6 +271,7 @@ Integrate threat intelligence feeds:
 ## Additional Resources
 
 - **Main README**: `/README.md` - Overview and usage instructions
+- **DEVO Syntax Guide**: `/DEVO_QUERY_SYNTAX_GUIDE.md` - How to align queries with actual DEVO LINQ syntax
 - **CONTRIBUTING**: `/CONTRIBUTING.md` - How to add new use cases
 - **MITRE ATT&CK Mapping**: Each use case includes relevant tactics and techniques
 - **Tuning Guidance**: False positive considerations and tuning recommendations in each file

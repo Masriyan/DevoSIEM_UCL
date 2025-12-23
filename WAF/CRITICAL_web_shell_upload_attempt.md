@@ -15,36 +15,38 @@ Detects attempts to upload web shells to web applications, which would allow att
 
 ```sql
 from waf.logs
-where (filename like "%.php%"
-    or filename like "%.asp%"
-    or filename like "%.aspx%"
-    or filename like "%.jsp%"
-    or filename like "%.jspx%")
-  and (content like "%eval(%"
-    or content like "%base64_decode%"
-    or content like "%system(%"
-    or content like "%exec(%"
-    or content like "%shell_exec%"
-    or content like "%passthru%"
-    or content like "%cmd.exe%"
-    or content like "%powershell%"
-    or content like "%ProcessStartInfo%"
-    or content like "%Runtime.getRuntime%")
-  and http_method = "POST"
-  and uri like "%upload%"
-select
-  eventdate,
-  srcip,
-  dstip,
-  http_host,
-  uri,
-  filename,
-  file_hash,
-  http_method,
-  http_user_agent,
-  waf_action,
-  threat_score,
-  geolocation
+select eventdate
+select srcip
+select dstip
+select http_host
+select uri
+select filename
+select file_hash
+select http_method
+select http_user_agent
+select waf_action
+select threat_score
+select geolocation
+select mm2country(srcip) as src_country
+select mm2country(dstip) as dst_country
+where (weakhas(filename, ".php")
+    or weakhas(filename, ".asp")
+    or weakhas(filename, ".aspx")
+    or weakhas(filename, ".jsp")
+    or weakhas(filename, ".jspx"))
+  and (weakhas(content, "eval(")
+    or weakhas(content, "base64_decode")
+    or weakhas(content, "system(")
+    or weakhas(content, "exec(")
+    or weakhas(content, "shell_exec")
+    or weakhas(content, "passthru")
+    or weakhas(content, "cmd.exe")
+    or weakhas(content, "powershell")
+    or weakhas(content, "ProcessStartInfo")
+    or weakhas(content, "Runtime.getRuntime"))
+  and weakhas(http_method, "POST")
+  and weakhas(uri, "upload")
+
 group by srcip, filename, uri
 ```
 

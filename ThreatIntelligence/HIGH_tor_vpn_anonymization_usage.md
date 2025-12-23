@@ -13,30 +13,25 @@ Detects when internal users connect to TOR exit nodes, anonymous VPNs, or proxy 
 ## DEVO Query
 
 ```sql
-from firewall.traffic, proxy.logs, network.connections
-where (dstip in (select ip from threatintel.tor_exit_nodes)
-  or dstip in (select ip from threatintel.vpn_services where category = "anonymous")
-  or dstip in (select ip from threatintel.proxy_networks)
-  or domain like "%.onion"
-  or domain in (select domain from threatintel.anonymization_services))
-  and srcip in (select ip from internal_networks)
-select
-  eventdate,
-  srcip,
-  srchost,
-  user,
-  dstip,
-  dstport,
-  domain,
-  threatintel.tor_exit_nodes.country as tor_exit_country,
-  threatintel.vpn_services.service_name,
-  threatintel.vpn_services.privacy_rating,
-  bytes_sent,
-  bytes_received,
-  protocol,
-  application,
-  geolocation
-group by srcip, user, dstip
+from firewall.traffic, proxy.logs
+select eventdate
+select srcaddr
+select dstaddr
+select user
+select application
+select url
+select bytes_sent
+select bytes_received
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select purpose(dstaddr) as dst_purpose
+where (`in`(select ip from threatintel.tor_exit_nodes, dstaddr)
+  or `in`(select ip from threatintel.vpn_services, dstaddr)
+  or `in`(select ip from threatintel.proxy_services, dstaddr)
+  or weakhas(url, "torproject.org")
+  or weakhas(domain, "anonymizer"))
+  and weakhas(action, "allow")
+group by srcaddr, user, dstaddr
 ```
 
 ## Alert Configuration

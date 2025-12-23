@@ -13,29 +13,19 @@ Detects access to recently registered domains (< 30 days old), which are commonl
 ## DEVO Query
 
 ```sql
-from proxy.logs, dns.logs, email.logs
-where domain not in (select domain from approved_domains)
-  and domain_age <= 30
-  or (domain in (select domain from threatintel.newly_registered
-    where registration_date >= now() - 30d)
-  and category not in ("CDN", "Cloud", "Legitimate"))
-select
-  eventdate,
-  srcip,
-  user,
-  domain,
-  url,
-  threatintel.newly_registered.registration_date,
-  threatintel.newly_registered.registrar,
-  threatintel.newly_registered.registrant_country,
-  threatintel.newly_registered.nameservers,
-  threatintel.newly_registered.ssl_cert_age,
-  threatintel.newly_registered.similarity_score,
-  action,
-  http_method,
-  user_agent,
-  count() as access_count
-group by user, domain
+from proxy.logs, dns.logs
+select eventdate
+select user
+select srcaddr
+select domain
+select url
+select http_status
+select mm2country(srcaddr) as src_country
+select count() as access_count
+where not `in`(select domain from approved_domains, domain)
+  and (domain_age <= 30
+    or `in`(select domain from threatintel.newly_registered, domain))
+group by user, domain, srcaddr
 every 1h
 having access_count >= 1
 ```

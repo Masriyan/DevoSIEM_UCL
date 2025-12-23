@@ -14,23 +14,24 @@ Monitors changes to EC2 security groups to track network access control modifica
 
 ```sql
 from cloud.aws.cloudtrail
-where eventSource = "ec2.amazonaws.com"
-  and eventName in ("AuthorizeSecurityGroupIngress", "AuthorizeSecurityGroupEgress",
-                     "RevokeSecurityGroupIngress", "RevokeSecurityGroupEgress",
-                     "CreateSecurityGroup", "DeleteSecurityGroup",
-                     "ModifySecurityGroupRules")
+select eventdate
+select userIdentity.principalId
+select userIdentity.arn as user_arn
+select eventName
+select requestParameters.groupId as security_group_id
+select requestParameters.groupName as security_group_name
+select requestParameters.ipPermissions
+select awsRegion
+select sourceIPAddress
+select userAgent
+select mm2country(sourceIPAddress) as source_country
+select mm2city(sourceIPAddress) as source_city
+where weakhas(eventSource, "ec2.amazonaws.com")
+  and `in`("AuthorizeSecurityGroupIngress", "AuthorizeSecurityGroupEgress",
+           "RevokeSecurityGroupIngress", "RevokeSecurityGroupEgress",
+           "CreateSecurityGroup", "DeleteSecurityGroup",
+           "ModifySecurityGroupRules", eventName)
   and errorCode is null
-select
-  eventdate,
-  userIdentity.principalId,
-  userIdentity.arn as user_arn,
-  eventName,
-  requestParameters.groupId as security_group_id,
-  requestParameters.groupName as security_group_name,
-  requestParameters.ipPermissions,
-  awsRegion,
-  sourceIPAddress,
-  userAgent
 group by security_group_id, eventName, user_arn
 ```
 

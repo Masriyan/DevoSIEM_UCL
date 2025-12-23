@@ -13,28 +13,25 @@ Detects large-scale data downloads or transfers by internal users, which may ind
 ## DEVO Query
 
 ```sql
-from siem.dataaccess, cloud.storage.access, dlp.events
-where action in ("download", "export", "copy", "sync", "transfer")
-  and result = "success"
-select
-  eventdate,
-  username,
-  srcip,
-  filename,
-  filepath,
-  filesize,
-  destination,
-  application,
-  dataclassification,
-  sum(filesize) as total_bytes,
-  count() as file_count,
-  countdistinct(filepath) as unique_paths,
-  countdistinct(destination) as unique_destinations
-group by username
+from siem.dataaccess
+select eventdate
+select username
+select srcip
+select filename
+select filepath
+select filesize
+select destination
+select application
+select dataclassification
+select sum(filesize) as total_bytes
+select count() as file_count
+select countdistinct(filepath) as unique_paths
+select countdistinct(destination) as unique_destinations
+select mm2country(srcip) as src_country
+where `in`("download", "export", "copy", "sync", "transfer", action)
+  and weakhas(result, "success")
+
 every 1h
-having total_bytes > 10737418240  -- 10 GB
-  or file_count > 1000
-  or unique_paths > 100
 ```
 
 ## Alert Configuration

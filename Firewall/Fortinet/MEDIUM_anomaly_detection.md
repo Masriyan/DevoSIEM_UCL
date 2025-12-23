@@ -14,22 +14,23 @@ Detects network anomalies identified by Fortinet's anomaly detection engine, inc
 
 ```sql
 from firewall.fortinet.anomaly
-where anomaly = "anomaly"
-  or subtype = "anomaly"
-select
-  eventdate,
-  srcip,
-  dstip,
-  srcport,
-  dstport,
-  proto,
-  anomaly,
-  severity,
-  action,
-  msg,
-  attack_name,
-  count() as occurrence_count
-group by srcip, dstip, anomaly, attack_name
+select eventdate
+select srcaddr
+select dstaddr
+select srcport
+select dstport
+select proto
+select anomaly
+select severity
+select action
+select msg
+select attack_name
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select count() as occurrence_count
+where weakhas(anomaly, "anomaly")
+  or weakhas(subtype, "anomaly")
+group by srcaddr, dstaddr, anomaly, attack_name
 having occurrence_count > 5
 ```
 

@@ -13,31 +13,20 @@ Detects when a user has active concurrent sessions from two or more different co
 ## DEVO Query
 
 ```sql
-from siem.logins, siem.activity
-where result = "success"
-select
-  username,
-  eventdate,
-  srcip,
-  geolocation.country as country,
-  geolocation.city as city,
-  sessionid,
-  application,
-  useragent,
-  deviceid
-group by username, sessionid
+from siem.logins
+select username
+select eventdate
+select srcip
+select geolocation.country as country
+select geolocation.city as city
+select sessionid
+select application
+select useragent
+select deviceid
+select mm2country(srcip) as src_country
+where weakhas(result, "success")
+
 every 15m
--- Find users with active sessions in multiple countries
-with concurrent_countries as (
-  select
-    username,
-    countdistinct(country) as unique_countries,
-    collectdistinct(country) as countries_list,
-    countdistinct(srcip) as unique_ips,
-    collectdistinct(city) as cities_list
-  group by username
-  having unique_countries >= 2
-)
 ```
 
 ## Alert Configuration

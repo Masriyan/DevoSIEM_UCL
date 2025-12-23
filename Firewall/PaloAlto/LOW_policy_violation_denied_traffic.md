@@ -14,19 +14,20 @@ Monitors traffic denied by security policies to identify policy violations, misc
 
 ```sql
 from firewall.paloalto.traffic
-where action = "deny"
-  and rule_name not in ("cleanup", "default-deny")
-select
-  eventdate,
-  srcip,
-  dstip,
-  srcuser,
-  dstport,
-  application,
-  rule_name,
-  action,
-  count() as attempt_count
-group by srcip, dstip, dstport, rule_name
+select eventdate
+select srcaddr
+select dstaddr
+select srcuser
+select dstport
+select application
+select rule_name
+select action
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select count() as attempt_count
+where weakhas(action, "deny")
+  and not `in`("cleanup", "default-deny", rule_name)
+group by srcaddr, dstaddr, dstport, rule_name
 having attempt_count > 20
 ```
 

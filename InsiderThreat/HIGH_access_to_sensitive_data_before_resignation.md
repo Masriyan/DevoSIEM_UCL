@@ -13,25 +13,9 @@ Detects when employees who have submitted resignation access sensitive data or s
 ## DEVO Query
 
 ```sql
--- Correlate with HR resignation data
 from siem.dataaccess
-where username in (select username from hr.resignations where resignation_date <= now() + 90d)
-  and (dataclassification in ("confidential", "secret", "restricted")
-    or resourcetype in ("financial", "customer_database", "hr_system", "trade_secrets"))
-select
-  eventdate,
-  username,
-  hr.resignations.resignation_date,
-  hr.resignations.last_day,
-  datediff(hr.resignations.last_day, eventdate) as days_before_departure,
-  resourcename,
-  resourcetype,
-  dataclassification,
-  action,
-  srcip,
-  count() as access_count,
-  sum(bytes_transferred) as total_bytes
-group by username, resourcename
+select username from hr.resignations
+where username in (
 having access_count > 5 or total_bytes > 1073741824  -- 1 GB
 ```
 

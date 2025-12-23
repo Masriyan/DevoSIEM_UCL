@@ -13,34 +13,33 @@ Detects ransomware activity based on behavioral indicators such as rapid file en
 ## DEVO Query
 
 ```sql
-from edr.events, edr.file_activity
-where (event_type = "file_modification"
+from edr.events
+select eventdate
+select hostname
+select username
+select process_name
+select parent_process
+select command_line
+select file_path
+select file_extension
+select count(file_path) as files_modified
+select countdistinct(file_extension) as unique_extensions
+select avg(file_entropy) as avg_entropy
+where (weakhas(event_type, "file_modification")
   and (file_extension_change = true
     or file_entropy > 7.5
     or filename like "%.encrypted"
     or filename like "%.locked"
     or filename like "%.crypto"
-    or filename like "%.crypt%"
-    or filename like "%README%"
-    or filename like "%DECRYPT%"
-    or filename like "%HOW_TO_RECOVER%"))
-  or (process_name in ("vssadmin.exe", "wbadmin.exe", "bcdedit.exe")
+    or weakhas(filename, ".crypt")
+    or weakhas(filename, "README")
+    or weakhas(filename, "DECRYPT")
+    or weakhas(filename, "HOW_TO_RECOVER")))
+  or (`in`("vssadmin.exe", "wbadmin.exe", "bcdedit.exe", process_name)
     and command_line like "%delete%shadow%")
   or (command_line like "%cipher%/w%"
     or command_line like "%vssadmin%delete%shadows%all%")
-select
-  eventdate,
-  hostname,
-  username,
-  process_name,
-  parent_process,
-  command_line,
-  file_path,
-  file_extension,
-  count(file_path) as files_modified,
-  countdistinct(file_extension) as unique_extensions,
-  avg(file_entropy) as avg_entropy
-group by hostname, process_name
+
 every 5m
 having files_modified > 50 or unique_extensions > 10
 ```

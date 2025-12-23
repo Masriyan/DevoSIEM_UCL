@@ -14,27 +14,28 @@ Detects creation or modification of AWS Lambda functions that could be used for 
 
 ```sql
 from cloud.aws.cloudtrail
-where eventSource = "lambda.amazonaws.com"
-  and eventName in ("CreateFunction20150331", "UpdateFunctionCode20150331v2",
-                     "UpdateFunctionConfiguration20150331v2", "AddPermission20150331v2",
-                     "CreateEventSourceMapping")
-  and (errorCode is null or errorCode = "")
-select
-  eventdate,
-  userIdentity.principalId,
-  userIdentity.arn as user_arn,
-  eventName,
-  requestParameters.functionName,
-  requestParameters.runtime,
-  requestParameters.role as lambda_role,
-  requestParameters.code.s3Bucket,
-  requestParameters.code.s3Key,
-  requestParameters.environment.variables as env_vars,
-  requestParameters.layers,
-  responseElements.functionArn,
-  sourceIPAddress,
-  userAgent,
-  awsRegion
+select eventdate
+select userIdentity.principalId
+select userIdentity.arn as user_arn
+select eventName
+select requestParameters.functionName as functionName
+select requestParameters.runtime
+select requestParameters.role as lambda_role
+select requestParameters.code.s3Bucket
+select requestParameters.code.s3Key
+select requestParameters.environment.variables as env_vars
+select requestParameters.layers
+select responseElements.functionArn
+select sourceIPAddress
+select userAgent
+select awsRegion
+select mm2country(sourceIPAddress) as source_country
+select mm2city(sourceIPAddress) as source_city
+where weakhas(eventSource, "lambda.amazonaws.com")
+  and `in`("CreateFunction20150331", "UpdateFunctionCode20150331v2",
+           "UpdateFunctionConfiguration20150331v2", "AddPermission20150331v2",
+           "CreateEventSourceMapping", eventName)
+  and (errorCode is null or weakhas(errorCode, ""))
 group by functionName, user_arn, eventName
 ```
 

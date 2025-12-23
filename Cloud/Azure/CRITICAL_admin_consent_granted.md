@@ -14,22 +14,22 @@ Detects when administrative consent is granted to applications in Azure AD, whic
 
 ```sql
 from cloud.azure.auditlogs
-where OperationName = "Consent to application"
-  and ActivityDisplayName = "Consent to application"
-  and ResultStatus = "Success"
+select eventdate
+select Identity
+select UserPrincipalName
+select AppDisplayName
+select ResourceDisplayName
+select TargetResources.modifiedProperties.displayName as permission_type
+select TargetResources.modifiedProperties.newValue as permissions_granted
+select SourceSystem
+select IPAddress
+select ResultReason
+select AdditionalDetails
+where weakhas(OperationName, "Consent to application")
+  and weakhas(ActivityDisplayName, "Consent to application")
+  and weakhas(ResultStatus, "Success")
   and TargetResources.modifiedProperties.newValue contains "AllPrincipal"
-select
-  eventdate,
-  Identity,
-  UserPrincipalName,
-  AppDisplayName,
-  ResourceDisplayName,
-  TargetResources.modifiedProperties.displayName as permission_type,
-  TargetResources.modifiedProperties.newValue as permissions_granted,
-  SourceSystem,
-  IPAddress,
-  ResultReason,
-  AdditionalDetails
+
 group by UserPrincipalName, AppDisplayName, permissions_granted
 ```
 

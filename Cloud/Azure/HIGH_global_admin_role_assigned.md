@@ -14,21 +14,21 @@ Detects when the Global Administrator role is assigned to a user in Azure AD, pr
 
 ```sql
 from cloud.azure.auditlogs
-where OperationName in ("Add member to role", "Add eligible member to role")
+select eventdate
+select InitiatedBy.user.userPrincipalName as admin_who_assigned
+select TargetResources.userPrincipalName as new_global_admin
+select TargetResources.modifiedProperties.displayName as role_name
+select ActivityDisplayName
+select Category
+select IPAddress
+select SourceSystem
+select AdditionalDetails
+where `in`("Add member to role", "Add eligible member to role", OperationName)
   and TargetResources.modifiedProperties.newValue contains "Company Administrator"
   or TargetResources.modifiedProperties.newValue contains "Global Administrator"
   or TargetResources.modifiedProperties.newValue contains "62e90394-69f5-4237-9190-012177145e10"
-  and ResultStatus = "Success"
-select
-  eventdate,
-  InitiatedBy.user.userPrincipalName as admin_who_assigned,
-  TargetResources.userPrincipalName as new_global_admin,
-  TargetResources.modifiedProperties.displayName as role_name,
-  ActivityDisplayName,
-  Category,
-  IPAddress,
-  SourceSystem,
-  AdditionalDetails
+  and weakhas(ResultStatus, "Success")
+
 group by new_global_admin, admin_who_assigned
 ```
 

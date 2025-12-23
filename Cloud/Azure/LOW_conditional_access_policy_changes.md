@@ -14,21 +14,21 @@ Monitors changes to Azure AD Conditional Access policies to ensure security cont
 
 ```sql
 from cloud.azure.auditlogs
-where Category = "Policy"
-  and OperationName in ("Add conditional access policy",
+select eventdate
+select InitiatedBy.user.userPrincipalName as modified_by
+select OperationName
+select TargetResources.displayName as policy_name
+select TargetResources.modifiedProperties.displayName as property_modified
+select TargetResources.modifiedProperties.oldValue
+select TargetResources.modifiedProperties.newValue
+select IPAddress
+select ActivityDisplayName
+where weakhas(Category, "Policy")
+  and `in`("Add conditional access policy",
                          "Update conditional access policy",
-                         "Delete conditional access policy")
-  and ResultStatus = "Success"
-select
-  eventdate,
-  InitiatedBy.user.userPrincipalName as modified_by,
-  OperationName,
-  TargetResources.displayName as policy_name,
-  TargetResources.modifiedProperties.displayName as property_modified,
-  TargetResources.modifiedProperties.oldValue,
-  TargetResources.modifiedProperties.newValue,
-  IPAddress,
-  ActivityDisplayName
+                         "Delete conditional access policy", OperationName)
+  and weakhas(ResultStatus, "Success")
+
 group by policy_name, modified_by, OperationName
 ```
 

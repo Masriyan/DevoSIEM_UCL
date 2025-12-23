@@ -14,23 +14,20 @@ Detects successful authentication immediately following multiple failed login at
 
 ```sql
 from siem.logins
-where eventname in ("login", "authentication", "logon")
-select
-  eventdate,
-  username,
-  srcip,
-  dsthost,
-  result,
-  application,
-  useragent,
-  count() as attempt_count,
-  countdistinct(result) as distinct_results
-group by username, srcip
+select eventdate
+select username
+select srcip
+select dsthost
+select result
+select application
+select useragent
+select count() as attempt_count
+select countdistinct(result) as distinct_results
+select mm2country(srcip) as src_country
+select mm2country(dsthost) as dst_country
+where `in`("login", "authentication", "logon", eventname)
+
 every 10m
-where attempt_count > 10
-  and distinct_results > 1
-  and some(result = "success")
-  and some(result in ("failed", "failure", "denied"))
 ```
 
 ## Alert Configuration

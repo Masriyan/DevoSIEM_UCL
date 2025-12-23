@@ -14,34 +14,31 @@ Detects when a user authenticates from two geographically distant locations with
 
 ```sql
 from siem.logins
-where result = "success"
-select
-  eventdate,
-  username,
-  srcip,
-  geolocation.city as city,
-  geolocation.country as country,
-  geolocation.latitude as lat,
-  geolocation.longitude as lon,
-  application,
-  useragent,
-  lag(geolocation.latitude) over username as prev_lat,
-  lag(geolocation.longitude) over username as prev_lon,
-  lag(eventdate) over username as prev_login_time,
-  lag(srcip) over username as prev_ip,
-  -- Calculate distance in kilometers using Haversine formula
+select eventdate
+select username
+select srcip
+select geolocation.city as city
+select geolocation.country as country
+select geolocation.latitude as lat
+select geolocation.longitude as lon
+select application
+select useragent
+select lag(geolocation.latitude) over username as prev_lat
+select lag(geolocation.longitude) over username as prev_lon
+select lag(eventdate) over username as prev_login_time
+select lag(srcip) over username as prev_ip
+select -- Calculate distance in kilometers using Haversine formula
   (6371 * acos(
     cos(radians(prev_lat)) * cos(radians(lat)) *
     cos(radians(lon) - radians(prev_lon)) +
     sin(radians(prev_lat)) * sin(radians(lat))
-  )) as distance_km,
-  -- Time difference in hours
-  (eventdate - prev_login_time) / 3600000 as time_diff_hours,
-  -- Required speed in km/h
+  )) as distance_km
+select -- Time difference in hours
+  (eventdate - prev_login_time) / 3600000 as time_diff_hours
+select -- Required speed in km/h
   (distance_km / (time_diff_hours + 0.001)) as required_speed_kmh
-where distance_km > 500
-  and required_speed_kmh > 900  -- Faster than commercial flight
-  and prev_login_time is not null
+select mm2country(srcip) as src_country
+where weakhas(result, "success")
 ```
 
 ## Alert Configuration

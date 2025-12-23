@@ -13,31 +13,23 @@ Detects communication with infrastructure associated with Advanced Persistent Th
 ## DEVO Query
 
 ```sql
-from firewall.traffic, proxy.logs, dns.logs, network.connections
-where (dstip in (select ioc from threatintel.apt_infrastructure where active = true)
-  or domain in (select ioc from threatintel.apt_domains where active = true)
-  or ssl_cert_hash in (select ioc from threatintel.apt_certificates))
-select
-  eventdate,
-  srcip,
-  srchost,
-  user,
-  dstip,
-  domain,
-  threatintel.apt_infrastructure.apt_group,
-  threatintel.apt_infrastructure.threat_actor,
-  threatintel.apt_infrastructure.campaign,
-  threatintel.apt_infrastructure.targeted_sectors,
-  threatintel.apt_infrastructure.first_seen,
-  threatintel.apt_infrastructure.last_seen,
-  threatintel.apt_infrastructure.ioc_type,
-  threatintel.apt_infrastructure.confidence,
-  threatintel.apt_infrastructure.source_report,
-  bytes_sent,
-  bytes_received,
-  protocol,
-  dstport
-group by srcip, dstip, domain, apt_group
+from firewall.traffic, proxy.logs, dns.logs
+select eventdate
+select srcaddr
+select dstaddr
+select domain
+select url
+select application
+select bytes_sent
+select bytes_received
+select user
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select purpose(dstaddr) as dst_purpose
+where (`in`(select ioc from threatintel.apt_infrastructure, dstaddr)
+  or `in`(select domain from threatintel.apt_domains, domain))
+  and weakhas(action, "allow")
+group by srcaddr, dstaddr, domain
 ```
 
 ## Alert Configuration

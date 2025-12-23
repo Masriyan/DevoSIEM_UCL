@@ -14,26 +14,26 @@ Detects attempts to dump credentials from memory (LSASS), registry (SAM), or dom
 
 ```sql
 from edr.events
-where (process_name in ("mimikatz.exe", "procdump.exe", "pwdump.exe", "gsecdump.exe")
-  or (process_name = "rundll32.exe" and command_line like "%comsvcs.dll%MiniDump%")
-  or (target_process = "lsass.exe" and event_type in ("process_access", "memory_read"))
-  or (file_path like "%\\ntds.dit" and event_type = "file_access")
-  or (registry_path like "%SAM\\SAM\\Domains%" and event_type = "registry_access")
-  or command_line like "%sekurlsa::logonpasswords%"
-  or command_line like "%privilege::debug%"
-  or command_line like "%lsadump::sam%"
-  or command_line like "%lsadump::secrets%")
-select
-  eventdate,
-  hostname,
-  username,
-  process_name,
-  parent_process,
-  command_line,
-  target_process,
-  file_path,
-  registry_path,
-  process_hash
+select eventdate
+select hostname
+select username
+select process_name
+select parent_process
+select command_line
+select target_process
+select file_path
+select registry_path
+select process_hash
+where (`in`("mimikatz.exe", "procdump.exe", "pwdump.exe", "gsecdump.exe", process_name)
+  or (weakhas(process_name, "rundll32.exe") and command_line like "%comsvcs.dll%MiniDump%")
+  or (weakhas(target_process, "lsass.exe") and `in`("process_access", "memory_read", event_type))
+  or (file_path like "%\\ntds.dit" and weakhas(event_type, "file_access"))
+  or (weakhas(registry_path, "SAM\\SAM\\Domains") and weakhas(event_type, "registry_access"))
+  or weakhas(command_line, "sekurlsa::logonpasswords")
+  or weakhas(command_line, "privilege::debug")
+  or weakhas(command_line, "lsadump::sam")
+  or weakhas(command_line, "lsadump::secrets"))
+
 group by hostname, username, process_name
 ```
 

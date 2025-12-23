@@ -14,10 +14,7 @@ Detects DNS tunneling used for data exfiltration or C2 communication by identify
 
 ```sql
 from network.dns
-where query_type in ("TXT", "NULL", "CNAME", "MX")
-  or length(domain) > 60
-  or (subdomain_count > 5
-    and domain not in (select domain from approved_dynamic_dns))
+select domain from approved_dynamic_dns))
   or entropy(domain) > 4.5
 select
   eventdate,
@@ -30,12 +27,11 @@ select
   count() as query_count,
   sum(response_bytes) as total_response_bytes,
   countdistinct(domain) as unique_domains
-group by srcip, domain
+where `in`("TXT", "NULL", "CNAME", "MX", query_type)
+  or length(domain) > 60
+  or (subdomain_count > 5
+    and domain not in (
 every 10m
-having query_count > 100
-  or unique_domains > 50
-  or total_response_bytes > 10000
-  or domain_length > 60
 ```
 
 ## Alert Configuration

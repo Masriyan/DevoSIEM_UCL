@@ -13,32 +13,32 @@ Detects when sensitive or confidential data is uploaded to personal cloud storag
 ## DEVO Query
 
 ```sql
-from dlp.events, proxy.logs, casb.logs
-where (action in ("upload", "file_upload", "cloud_upload")
-  and (application in ("Dropbox", "Google Drive", "OneDrive Personal", "Box", "iCloud", "WeTransfer", "Mega")
-    or url like "%dropbox.com%" or url like "%drive.google.com%"
-    or url like "%onedrive.live.com%" or url like "%wetransfer.com%"
-    or url like "%mega.nz%" or url like "%mediafire.com%")
-  and (data_classification in ("confidential", "secret", "restricted", "pii", "phi", "pci")
-    or content_type like "%financial%"
-    or content_type like "%customer%"
-    or filename like "%confidential%"
+from dlp.events
+select eventdate
+select username
+select srcip
+select destination_url
+select application
+select filename
+select file_size
+select file_hash
+select data_classification
+select dlp_policy_matched
+select content_categories
+select count() as files_uploaded
+select sum(file_size) as total_bytes_uploaded
+select mm2country(srcip) as src_country
+where (`in`("upload", "file_upload", "cloud_upload", action)
+  and (`in`("Dropbox", "Google Drive", "OneDrive Personal", "Box", "iCloud", "WeTransfer", "Mega", application)
+    or weakhas(url, "dropbox.com") or weakhas(url, "drive.google.com")
+    or weakhas(url, "onedrive.live.com") or weakhas(url, "wetransfer.com")
+    or weakhas(url, "mega.nz") or weakhas(url, "mediafire.com"))
+  and (`in`("confidential", "secret", "restricted", "pii", "phi", "pci", data_classification)
+    or weakhas(content_type, "financial")
+    or weakhas(content_type, "customer")
+    or weakhas(filename, "confidential")
     or dlp_policy_matched is not null))
-select
-  eventdate,
-  username,
-  srcip,
-  destination_url,
-  application,
-  filename,
-  file_size,
-  file_hash,
-  data_classification,
-  dlp_policy_matched,
-  content_categories,
-  count() as files_uploaded,
-  sum(file_size) as total_bytes_uploaded
-group by username, application, data_classification
+
 having files_uploaded > 0
 ```
 

@@ -14,24 +14,23 @@ Detects multiple failed MFA attempts for a user, which may indicate MFA fatigue 
 
 ```sql
 from cloud.azure.signinlogs
+select eventdate
+select UserPrincipalName
+select AppDisplayName
+select IPAddress
+select Location
+select DeviceDetail.operatingSystem
+select ResultType
+select ResultDescription
+select AuthenticationDetails.authenticationMethod
+select count() as failed_attempts
 where ResultType != "0"
-  and AuthenticationRequirement = "multiFactorAuthentication"
-  and (ResultDescription like "%MFA%"
-    or ResultDescription like "%authentication%"
-    or AuthenticationDetails.authenticationMethod = "PhoneAppNotification"
-    or AuthenticationDetails.authenticationMethod = "OneWaySMS")
-select
-  eventdate,
-  UserPrincipalName,
-  AppDisplayName,
-  IPAddress,
-  Location,
-  DeviceDetail.operatingSystem,
-  ResultType,
-  ResultDescription,
-  AuthenticationDetails.authenticationMethod,
-  count() as failed_attempts
-group by UserPrincipalName, IPAddress
+  and weakhas(AuthenticationRequirement, "multiFactorAuthentication")
+  and (weakhas(ResultDescription, "MFA")
+    or weakhas(ResultDescription, "authentication")
+    or weakhas(AuthenticationDetails.authenticationMethod, "PhoneAppNotification")
+    or weakhas(AuthenticationDetails.authenticationMethod, "OneWaySMS"))
+
 having failed_attempts >= 5
 ```
 

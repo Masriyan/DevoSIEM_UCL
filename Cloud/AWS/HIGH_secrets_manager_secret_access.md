@@ -14,21 +14,22 @@ Detects unusual or excessive access to AWS Secrets Manager secrets, which may in
 
 ```sql
 from cloud.aws.cloudtrail
-where eventSource = "secretsmanager.amazonaws.com"
-  and eventName in ("GetSecretValue", "BatchGetSecretValue")
+select eventdate
+select userIdentity.principalId
+select userIdentity.arn as accessor_arn
+select userIdentity.type as identity_type
+select requestParameters.secretId as secret_name
+select sourceIPAddress
+select userAgent
+select awsRegion
+select recipientAccountId
+select mm2country(sourceIPAddress) as source_country
+select mm2city(sourceIPAddress) as source_city
+select count() as access_count
+select countdistinct(requestParameters.secretId) as unique_secrets_accessed
+where weakhas(eventSource, "secretsmanager.amazonaws.com")
+  and `in`("GetSecretValue", "BatchGetSecretValue", eventName)
   and errorCode is null
-select
-  eventdate,
-  userIdentity.principalId,
-  userIdentity.arn as accessor_arn,
-  userIdentity.type as identity_type,
-  requestParameters.secretId as secret_name,
-  sourceIPAddress,
-  userAgent,
-  awsRegion,
-  recipientAccountId,
-  count() as access_count,
-  countdistinct(requestParameters.secretId) as unique_secrets_accessed
 group by accessor_arn, sourceIPAddress
 every 1h
 having access_count > 50 or unique_secrets_accessed > 10

@@ -14,22 +14,24 @@ Detects bot activity identified by Checkpoint Anti-Bot blade, including C2 commu
 
 ```sql
 from firewall.checkpoint.antibot
-where product = "Anti-Bot"
-  and action in ("Prevent", "Detect", "Prevent - Terminate")
+select eventdate
+select src as srcaddr
+select dst as dstaddr
+select src_user_name
+select malware_action
+select bot_name
+select industry_reference
+select confidence_level
+select action
+select protection_name
+select protection_type
+select severity
+select mm2country(src) as src_country
+select mm2country(dst) as dst_country
+select purpose(dst) as dst_purpose
+where weakhas(product, "Anti-Bot")
+  and `in`("Prevent", "Detect", "Prevent - Terminate", action)
   and confidence_level >= 2
-select
-  eventdate,
-  src,
-  dst,
-  src_user_name,
-  malware_action,
-  bot_name,
-  industry_reference,
-  confidence_level,
-  action,
-  protection_name,
-  protection_type,
-  severity
 group by src, dst, bot_name
 ```
 

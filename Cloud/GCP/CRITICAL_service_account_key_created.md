@@ -14,19 +14,19 @@ Detects creation of service account keys in GCP, which provide long-lived creden
 
 ```sql
 from cloud.gcp.audit
-where protoPayload.methodName = "google.iam.admin.v1.CreateServiceAccountKey"
+select eventdate
+select protoPayload.authenticationInfo.principalEmail as creator
+select protoPayload.request.name as service_account
+select protoPayload.resourceName
+select protoPayload.request.privateKeyType as key_type
+select protoPayload.request.keyAlgorithm
+select protoPayload.requestMetadata.callerIp as source_ip
+select protoPayload.requestMetadata.callerSuppliedUserAgent as user_agent
+select resource.labels.project_id
+where weakhas(protoPayload.methodName, "google.iam.admin.v1.CreateServiceAccountKey")
   and protoPayload.status.code is null
   or protoPayload.status.code = 0
-select
-  eventdate,
-  protoPayload.authenticationInfo.principalEmail as creator,
-  protoPayload.request.name as service_account,
-  protoPayload.resourceName,
-  protoPayload.request.privateKeyType as key_type,
-  protoPayload.request.keyAlgorithm,
-  protoPayload.requestMetadata.callerIp as source_ip,
-  protoPayload.requestMetadata.callerSuppliedUserAgent as user_agent,
-  resource.labels.project_id
+
 group by creator, service_account, source_ip
 ```
 

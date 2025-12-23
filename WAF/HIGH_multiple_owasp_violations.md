@@ -15,20 +15,20 @@ Detects when a source generates multiple different OWASP Top 10 attack patterns,
 
 ```sql
 from waf.logs
-where attack_type in ("sql-injection", "xss", "rce", "lfi", "rfi", "xxe", "ssrf", "command-injection", "path-traversal", "ldap-injection")
+select eventdate
+select srcip
+select http_host
+select countdistinct(attack_type) as unique_attack_types
+select collectdistinct(attack_type) as attack_types_list
+select count() as total_violations
+select countdistinct(uri) as unique_uris
+select geolocation.country
+select http_user_agent
+select waf_action
+select mm2country(srcip) as src_country
+where `in`("sql-injection", "xss", "rce", "lfi", "rfi", "xxe", "ssrf", "command-injection", "path-traversal", "ldap-injection", attack_type)
   or owasp_category is not null
-select
-  eventdate,
-  srcip,
-  http_host,
-  countdistinct(attack_type) as unique_attack_types,
-  collectdistinct(attack_type) as attack_types_list,
-  count() as total_violations,
-  countdistinct(uri) as unique_uris,
-  geolocation.country,
-  http_user_agent,
-  waf_action
-group by srcip, http_host
+
 every 30m
 having unique_attack_types >= 3 or total_violations >= 20
 ```

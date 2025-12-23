@@ -14,23 +14,22 @@ Monitors connections from or to blocked geographic regions based on security pol
 
 ```sql
 from firewall.fortinet.traffic
-where action = "deny"
-  and (srcipgeo not in ("US", "CA", "GB", "AU", "DE", "FR", "NL")
-  or dstipgeo not in ("US", "CA", "GB", "AU", "DE", "FR", "NL"))
-select
-  eventdate,
-  srcip,
-  dstip,
-  srcipgeo,
-  dstipgeo,
-  srcport,
-  dstport,
-  proto,
-  service,
-  action,
-  policyid,
-  count() as attempt_count
-group by srcip, dstip, srcipgeo, dstipgeo
+select eventdate
+select srcaddr
+select dstaddr
+select mm2country(srcaddr) as srcipgeo
+select mm2country(dstaddr) as dstipgeo
+select srcport
+select dstport
+select proto
+select service
+select action
+select policyid
+select count() as attempt_count
+where weakhas(action, "deny")
+  and (not `in`("US", "CA", "GB", "AU", "DE", "FR", "NL", mm2country(srcaddr))
+  or not `in`("US", "CA", "GB", "AU", "DE", "FR", "NL", mm2country(dstaddr)))
+group by srcaddr, dstaddr, mm2country(srcaddr), mm2country(dstaddr)
 having attempt_count > 10
 ```
 

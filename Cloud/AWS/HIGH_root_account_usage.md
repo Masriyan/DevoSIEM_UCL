@@ -14,22 +14,23 @@ Detects usage of AWS root account credentials, which violates security best prac
 
 ```sql
 from cloud.aws.cloudtrail
-where userIdentity.type = "Root"
-  and eventName != "ConsoleLogin"
-  and eventType != "AwsServiceEvent"
+select eventdate
+select userIdentity.accountId as account_id
+select eventName
+select eventSource
+select awsRegion
+select sourceIPAddress
+select userAgent
+select requestParameters
+select responseElements
+select errorCode
+select errorMessage
+select mm2country(sourceIPAddress) as source_country
+select mm2city(sourceIPAddress) as source_city
+where weakhas(userIdentity.type, "Root")
+  and not weakhas(eventName, "ConsoleLogin")
+  and not weakhas(eventType, "AwsServiceEvent")
   and errorCode is null
-select
-  eventdate,
-  userIdentity.accountId as account_id,
-  eventName,
-  eventSource,
-  awsRegion,
-  sourceIPAddress,
-  userAgent,
-  requestParameters,
-  responseElements,
-  errorCode,
-  errorMessage
 group by account_id, eventName, sourceIPAddress
 ```
 

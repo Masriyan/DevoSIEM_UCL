@@ -14,23 +14,24 @@ Detects critical severity attacks prevented by Checkpoint IPS, including exploit
 
 ```sql
 from firewall.checkpoint.ips
-where product = "IPS"
-  and threat_severity in ("Critical", "High")
-  and threat_prevention_action in ("Prevent", "Detect")
-select
-  eventdate,
-  src,
-  dst,
-  service_id,
-  application_name,
-  protection_name,
-  threat_severity,
-  threat_prevention_action,
-  attack_information,
-  cveid,
-  performance_impact,
-  confidence_level,
-  count() as attack_count
+select eventdate
+select src as srcaddr
+select dst as dstaddr
+select service_id
+select application_name
+select protection_name
+select threat_severity
+select threat_prevention_action
+select attack_information
+select cveid
+select performance_impact
+select confidence_level
+select mm2country(src) as src_country
+select mm2country(dst) as dst_country
+select count() as attack_count
+where weakhas(product, "IPS")
+  and `in`("Critical", "High", threat_severity)
+  and `in`("Prevent", "Detect", threat_prevention_action)
 group by src, dst, protection_name
 having attack_count >= 3
 ```

@@ -14,18 +14,18 @@ Detects modifications to IAM policies in GCP that could grant unauthorized acces
 
 ```sql
 from cloud.gcp.audit
-where protoPayload.methodName in ("SetIamPolicy", "google.iam.admin.v1.SetIAMPolicy")
+select eventdate
+select protoPayload.authenticationInfo.principalEmail as modifier
+select protoPayload.resourceName as resource
+select resource.labels.project_id
+select protoPayload.serviceData.policyDelta.bindingDeltas.action as action
+select protoPayload.serviceData.policyDelta.bindingDeltas.role as role
+select protoPayload.serviceData.policyDelta.bindingDeltas.member as member
+select protoPayload.requestMetadata.callerIp as source_ip
+where `in`("SetIamPolicy", "google.iam.admin.v1.SetIAMPolicy", protoPayload.methodName)
   and protoPayload.serviceData.policyDelta.bindingDeltas is not null
   and (protoPayload.status.code is null or protoPayload.status.code = 0)
-select
-  eventdate,
-  protoPayload.authenticationInfo.principalEmail as modifier,
-  protoPayload.resourceName as resource,
-  resource.labels.project_id,
-  protoPayload.serviceData.policyDelta.bindingDeltas.action as action,
-  protoPayload.serviceData.policyDelta.bindingDeltas.role as role,
-  protoPayload.serviceData.policyDelta.bindingDeltas.member as member,
-  protoPayload.requestMetadata.callerIp as source_ip
+
 group by modifier, resource, role, member
 ```
 

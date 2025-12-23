@@ -98,25 +98,78 @@ Examples:
 
 ## DEVO Query Requirements
 
-1. **Syntax**: Use proper DEVO LINQ syntax
+1. **Syntax**: Use official DEVO LINQ syntax (see examples below)
 2. **Performance**: Optimize for large-scale data processing
-3. **Comments**: Include inline comments for complex logic
-4. **Variables**: Use clear, descriptive field names
-5. **Testing**: Verify query runs without errors
+3. **Structure**: Multiple SELECT statements, one per field/expression
+4. **Functions**: Use DEVO-specific functions (`weakhas()`, `mm2country()`, `purpose()`, `` `in`() ``)
+5. **Enrichment**: Include geographic and IP classification where applicable
+6. **Testing**: Verify query runs without errors in your DEVO environment
 
-Example:
+### DEVO LINQ Syntax Example:
+
 ```sql
 from siem.logins
-where result in ("failed", "failure")
-  and username not like "%service_account%"
-select
-  eventdate,
-  username,
-  srcip,
-  count() as failed_attempts
-group by username, srcip
+select eventdate
+select username
+select srcaddr
+select mm2country(srcaddr) as src_country
+select mm2city(srcaddr) as src_city
+select count() as failed_attempts
+where `in`("failed", "failure", result)
+  and not weakhas(username, "service_account")
+group by username, srcaddr
 every 10m
 having failed_attempts >= 5
+```
+
+### Key DEVO Syntax Elements:
+
+**Multiple SELECT Statements:**
+```sql
+select eventdate
+select srcaddr
+select dstaddr
+select mm2country(dstaddr) as dst_country
+```
+
+**DEVO-Specific Functions:**
+```sql
+-- Flexible string matching
+where weakhas(action, "ACCEPT")
+
+-- Geographic enrichment
+select mm2country(srcaddr) as src_country
+select mm2city(dstaddr) as dst_city
+
+-- IP classification
+select purpose(srcaddr) as src_purpose
+
+-- List membership (note backticks)
+where `in`("value1", "value2", "value3", field_name)
+```
+
+**Field Naming:**
+- Use `srcaddr`/`dstaddr` for IP addresses (not `srcip`/`dstip`)
+- Cloud-specific fields keep their names (e.g., `userIdentity.arn`, `eventSource`)
+
+### Complete Query Template:
+
+```sql
+from [data.source.table]
+select eventdate
+select srcaddr
+select dstaddr
+select [other_fields]
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select purpose(srcaddr) as src_purpose
+select purpose(dstaddr) as dst_purpose
+where weakhas([field], "pattern")
+  and `in`("value1", "value2", [field])
+  and [condition] >= [threshold]
+group by [field1], [field2]
+every [time_window]
+having [aggregate_condition]
 ```
 
 ## MITRE ATT&CK Mapping

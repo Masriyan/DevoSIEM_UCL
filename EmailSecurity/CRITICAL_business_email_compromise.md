@@ -13,34 +13,35 @@ Detects indicators of Business Email Compromise attacks including email forwardi
 ## DEVO Query
 
 ```sql
-from email.logs, o365.audit
-where (event_type = "inbox_rule_created"
-  and (rule_action like "%forward%"
-    or rule_action like "%redirect%"
-    or rule_action like "%delete%")
-  and (rule_condition like "%invoice%"
-    or rule_condition like "%payment%"
-    or rule_condition like "%wire%"
-    or rule_condition like "%transfer%"))
+from email.logs
+select eventdate
+select recipient
+select sender
+select sender_domain
+select display_name
+select email_subject
+select rule_name
+select rule_action
+select forwarding_address
+select srcip
+select geolocation
+select mm2country(srcip) as src_country
+where (weakhas(event_type, "inbox_rule_created")
+  and (weakhas(rule_action, "forward")
+    or weakhas(rule_action, "redirect")
+    or weakhas(rule_action, "delete"))
+  and (weakhas(rule_condition, "invoice")
+    or weakhas(rule_condition, "payment")
+    or weakhas(rule_condition, "wire")
+    or weakhas(rule_condition, "transfer")))
   or (email_subject like "%urgent%payment%"
     or email_subject like "%wire%transfer%"
-    or email_subject like "%invoice%"
-    or email_subject like "%CEO%" or email_subject like "%CFO%")
+    or weakhas(email_subject, "invoice")
+    or weakhas(email_subject, "CEO") or weakhas(email_subject, "CFO"))
   and (sender_domain != recipient_domain
     or display_name != actual_sender)
-  or (operation = "Set-Mailbox" and parameters like "%ForwardingSmtpAddress%")
-select
-  eventdate,
-  recipient,
-  sender,
-  sender_domain,
-  display_name,
-  email_subject,
-  rule_name,
-  rule_action,
-  forwarding_address,
-  srcip,
-  geolocation
+  or (weakhas(operation, "Set-Mailbox") and weakhas(parameters, "ForwardingSmtpAddress"))
+
 group by recipient, sender, rule_name
 ```
 

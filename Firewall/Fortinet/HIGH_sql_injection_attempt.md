@@ -15,26 +15,27 @@ Detects SQL injection attack attempts identified by FortiGuard IPS/WAF signature
 
 ```sql
 from firewall.fortinet.ips
-where (attack_name like "%SQL.Injection%"
-  or attack_name like "%SQLi%"
-  or signature_subclass = "sql-injection")
-  and action in ("detected", "blocked", "dropped")
-select
-  eventdate,
-  srcip,
-  dstip,
-  dstport,
-  proto,
-  attack_name,
-  attack_id,
-  severity,
-  action,
-  url,
-  http_method,
-  http_host,
-  msg,
-  count() as attempt_count
-group by srcip, dstip, attack_name, url
+select eventdate
+select srcaddr
+select dstaddr
+select dstport
+select proto
+select attack_name
+select attack_id
+select severity
+select action
+select url
+select http_method
+select http_host
+select msg
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select count() as attempt_count
+where (weakhas(attack_name, "SQL.Injection")
+  or weakhas(attack_name, "SQLi")
+  or weakhas(signature_subclass, "sql-injection"))
+  and `in`("detected", "blocked", "dropped", action)
+group by srcaddr, dstaddr, attack_name, url
 having attempt_count >= 1
 ```
 

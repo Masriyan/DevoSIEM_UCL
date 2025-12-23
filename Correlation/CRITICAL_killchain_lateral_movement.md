@@ -13,60 +13,17 @@ Correlates multiple events across different data sources to detect complete late
 ## DEVO Query
 
 ```sql
--- Correlate failed login, credential dump, and lateral movement
-with initial_compromise as (
-  select
-    hostname,
-    username,
-    srcip,
-    eventdate as compromise_time
+from siem.logins
+select hostname
+select username
+select srcip
+select eventdate as compromise_time
   from siem.logins
-  where result in ("failed", "failure")
-  group by hostname, username, srcip
-  every 30m
-  having count() >= 10
-),
-credential_access as (
-  select
-    hostname,
-    username,
-    eventdate as cred_dump_time,
-    process_name
-  from edr.events
-  where (target_process = "lsass.exe"
-    or process_name like "%mimikatz%"
-    or command_line like "%sekurlsa%")
-),
-lateral_movement as (
-  select
-    srcip,
-    dstip,
-    dst_hostname,
-    username,
-    eventdate as lateral_time,
-    service_name
-  from network.authentication, network.smb, network.rdp, network.wmi
-  where (service_name in ("psexec", "wmiexec", "smbexec", "rdp")
-    or event_type in ("smb_admin$", "c$_access", "remote_execution"))
-)
--- Join the stages
-select
-  ic.hostname as patient_zero,
-  ic.username as compromised_user,
-  ic.compromise_time,
-  ca.cred_dump_time,
-  lm.dst_hostname as lateral_target,
-  lm.lateral_time,
-  lm.service_name as lateral_method,
-  datediff_minutes(ic.compromise_time, ca.cred_dump_time) as time_to_cred_dump,
-  datediff_minutes(ca.cred_dump_time, lm.lateral_time) as time_to_lateral,
-  countdistinct(lm.dst_hostname) as systems_compromised
-from initial_compromise ic
-inner join credential_access ca on ic.hostname = ca.hostname
-  and ca.cred_dump_time between ic.compromise_time and ic.compromise_time + 4h
-inner join lateral_movement lm on ca.username = lm.username
-  and lm.lateral_time between ca.cred_dump_time and ca.cred_dump_time + 2h
+select mm2country(srcip) as src_country
+where `in`("failed", "failure", result)
+  
 group by patient_zero, compromised_user
+every 30m
 ```
 
 ## Alert Configuration

@@ -15,25 +15,25 @@ Detects when GCP Compute Engine instances are created with or assigned external 
 
 ```sql
 from cloud.gcp.audit
-where protoPayload.methodName in ("v1.compute.instances.insert",
-                                   "v1.compute.instances.addAccessConfig")
-  and (protoPayload.request.networkInterfaces.accessConfigs.type = "ONE_TO_ONE_NAT"
+select eventdate
+select protoPayload.authenticationInfo.principalEmail as creator
+select protoPayload.resourceName as instance_name
+select resource.labels.project_id
+select resource.labels.zone
+select protoPayload.request.networkInterfaces.accessConfigs.natIP as external_ip
+select protoPayload.request.machineType
+select protoPayload.request.disks.source as disk_image
+select protoPayload.request.tags.items as network_tags
+select protoPayload.request.serviceAccounts.email as service_account
+select protoPayload.request.metadata.items as instance_metadata
+select protoPayload.requestMetadata.callerIp as source_ip
+select protoPayload.requestMetadata.callerSuppliedUserAgent
+where `in`("v1.compute.instances.insert",
+                                   "v1.compute.instances.addAccessConfig", protoPayload.methodName)
+  and (weakhas(protoPayload.request.networkInterfaces.accessConfigs.type, "ONE_TO_ONE_NAT")
     or protoPayload.request.networkInterfaces.accessConfigs.natIP is not null)
   and (protoPayload.status.code is null or protoPayload.status.code = 0)
-select
-  eventdate,
-  protoPayload.authenticationInfo.principalEmail as creator,
-  protoPayload.resourceName as instance_name,
-  resource.labels.project_id,
-  resource.labels.zone,
-  protoPayload.request.networkInterfaces.accessConfigs.natIP as external_ip,
-  protoPayload.request.machineType,
-  protoPayload.request.disks.source as disk_image,
-  protoPayload.request.tags.items as network_tags,
-  protoPayload.request.serviceAccounts.email as service_account,
-  protoPayload.request.metadata.items as instance_metadata,
-  protoPayload.requestMetadata.callerIp as source_ip,
-  protoPayload.requestMetadata.callerSuppliedUserAgent
+
 group by creator, instance_name, external_ip
 ```
 

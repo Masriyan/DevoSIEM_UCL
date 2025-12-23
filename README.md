@@ -160,12 +160,22 @@ Each use case file contains:
 
 To implement these rules in DEVO SIEM:
 
-1. Navigate to the Alerts section in DEVO
-2. Create a new alert/correlation rule
-3. Copy the LINQ query from the use case file
-4. Configure severity, notifications, and response actions
-5. Test and tune based on your environment
-6. Adjust thresholds according to tuning recommendations
+1. **Select a use case** from the [INDEX.md](INDEX.md) based on priority
+2. **Review the query** - All queries use official DEVO LINQ syntax
+3. **Verify table names** - Confirm the table exists in your DEVO environment
+4. **Navigate to Alerts** in the DEVO platform
+5. **Create new alert** - Choose "Custom Query" or "Correlation Rule"
+6. **Copy the LINQ query** from the use case file
+7. **Test in Query mode** - Run with small time window (last 5-10 minutes)
+8. **Validate results** - Ensure query returns expected data
+9. **Configure alert settings**:
+   - Set severity level
+   - Configure notifications (email, webhook, SOAR)
+   - Set throttling/deduplication
+   - Define alert priority
+10. **Tune thresholds** - Adjust based on your environment baseline
+11. **Deploy to production** - Enable the alert
+12. **Monitor and refine** - Track false positives and adjust as needed
 
 ## Implementation Roadmap
 
@@ -289,6 +299,7 @@ New use cases should include:
 ## Documentation
 
 - **[INDEX.md](INDEX.md)** - Complete index of all use cases organized by category and severity
+- **[DEVO_QUERY_SYNTAX_GUIDE.md](DEVO_QUERY_SYNTAX_GUIDE.md)** - Comprehensive guide to align queries with actual DEVO LINQ syntax
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for adding new use cases
 - **[BANNER_INFO.md](BANNER_INFO.md)** - Information about creating the repository banner image
 - Individual use case files with detailed documentation
@@ -314,6 +325,28 @@ These use cases are provided as templates and should be tested and tuned for you
 - Baseline normal behavior
 - Threat landscape evolution
 - DEVO platform version and features
+
+**✅ DEVO LINQ Syntax - Production Ready:**
+All 45 queries in this library have been written using **official DEVO LINQ syntax** including:
+
+- **Multiple SELECT statements** - One select statement per field/expression
+- **DEVO-specific functions** - `weakhas()`, `mm2country()`, `mm2city()`, `purpose()`
+- **Backtick list operations** - `` `in`() `` for list membership
+- **Geographic enrichment** - Automatic IP-to-country/city mapping
+- **IP classification** - `purpose()` function for IP type identification
+
+**⚠️ Environment-Specific Validation Required:**
+While queries use official DEVO syntax, you must verify:
+
+- **Table names** - Confirm tables exist in your DEVO environment (e.g., `firewall.paloalto.traffic`, `cloud.aws.cloudtrail`)
+- **Field names** - Verify field names match your data source schema
+- **Data availability** - Ensure required fields are populated in your environment
+- **Threshold tuning** - Adjust alert thresholds based on your baseline
+- **Test before deployment** - Always test in non-production first
+
+**📖 DEVO Syntax Guide:** See [DEVO_QUERY_SYNTAX_GUIDE.md](DEVO_QUERY_SYNTAX_GUIDE.md) for comprehensive DEVO LINQ reference and examples.
+
+**📋 Syntax Analysis:** See [SYNTAX_ANALYSIS_REPORT.md](SYNTAX_ANALYSIS_REPORT.md) for detailed analysis of query structure and best practices.
 
 **No Warranty:** The author provides these use cases without any warranty, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
 

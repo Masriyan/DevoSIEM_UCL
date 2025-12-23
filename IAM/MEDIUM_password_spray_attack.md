@@ -14,14 +14,14 @@ Detects password spray attacks where an attacker attempts the same password agai
 
 ```sql
 from siem.logins
-where result in ("failed", "failure", "denied")
-select
-  eventdate,
-  srcip,
-  countdistinct(username) as unique_users_targeted,
-  count() as total_attempts,
-  collectdistinct(username) as usernames_list
-group by srcip
+select eventdate
+select srcip
+select countdistinct(username) as unique_users_targeted
+select count() as total_attempts
+select collectdistinct(username) as usernames_list
+select mm2country(srcip) as src_country
+where `in`("failed", "failure", "denied", result)
+
 every 15m
 having unique_users_targeted >= 10 and total_attempts >= 10
 ```

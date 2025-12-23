@@ -14,24 +14,27 @@ Detects botnet communication identified by FortiGuard IPS signatures, indicating
 
 ```sql
 from firewall.fortinet.ips
-where attack_name like "%Botnet%"
-  or attack_name like "%Bot.%"
-  or signature_subclass = "botnet"
-select
-  eventdate,
-  srcip,
-  dstip,
-  srcintf,
-  dstintf,
-  srcport,
-  dstport,
-  proto,
-  attack_name,
-  attack_id,
-  severity,
-  action,
-  msg
-group by srcip, dstip, attack_name
+select eventdate
+select srcaddr
+select dstaddr
+select srcintf
+select dstintf
+select srcport
+select dstport
+select proto
+select attack_name
+select attack_id
+select severity
+select action
+select msg
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select purpose(srcaddr) as src_purpose
+select purpose(dstaddr) as dst_purpose
+where weakhas(attack_name, "Botnet")
+  or weakhas(attack_name, "Bot.")
+  or weakhas(signature_subclass, "botnet")
+group by srcaddr, dstaddr, attack_name
 ```
 
 ## Alert Configuration

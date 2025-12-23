@@ -14,22 +14,22 @@ Detects when credentials (secrets or certificates) are added to Azure service pr
 
 ```sql
 from cloud.azure.auditlogs
-where OperationName in ("Add service principal credentials",
+select eventdate
+select InitiatedBy.user.userPrincipalName as actor
+select InitiatedBy.user.ipAddress
+select TargetResources.displayName as app_or_sp_name
+select TargetResources.id as app_or_sp_id
+select TargetResources.modifiedProperties.displayName as property_modified
+select TargetResources.modifiedProperties.newValue as new_credential
+select ActivityDisplayName
+select Category
+select CorrelationId
+select AdditionalDetails
+where `in`("Add service principal credentials",
                          "Update application - Certificates and secrets management",
-                         "Add owner to service principal")
-  and ResultStatus = "Success"
-select
-  eventdate,
-  InitiatedBy.user.userPrincipalName as actor,
-  InitiatedBy.user.ipAddress,
-  TargetResources.displayName as app_or_sp_name,
-  TargetResources.id as app_or_sp_id,
-  TargetResources.modifiedProperties.displayName as property_modified,
-  TargetResources.modifiedProperties.newValue as new_credential,
-  ActivityDisplayName,
-  Category,
-  CorrelationId,
-  AdditionalDetails
+                         "Add owner to service principal", OperationName)
+  and weakhas(ResultStatus, "Success")
+
 group by app_or_sp_name, actor
 ```
 

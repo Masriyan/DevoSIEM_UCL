@@ -14,23 +14,25 @@ Detects potential command and control (C2) communication attempts based on Palo 
 
 ```sql
 from firewall.paloalto.traffic
-where threat_type = "spyware"
-  or category in ("command-and-control", "malware", "phishing")
-  and action in ("alert", "block", "drop", "reset-both")
-select
-  eventdate,
-  srcip,
-  dstip,
-  srcuser,
-  dstport,
-  application,
-  threat_name,
-  category,
-  action,
-  bytes_sent,
-  bytes_received,
-  url
-group by srcip, dstip, threat_name
+select eventdate
+select srcaddr
+select dstaddr
+select srcuser
+select dstport
+select application
+select threat_name
+select category
+select action
+select bytes_sent
+select bytes_received
+select url
+select mm2country(srcaddr) as src_country
+select mm2country(dstaddr) as dst_country
+select purpose(dstaddr) as dst_purpose
+where weakhas(threat_type, "spyware")
+  or `in`("command-and-control", "malware", "phishing", category)
+  and `in`("alert", "block", "drop", "reset-both", action)
+group by srcaddr, dstaddr, threat_name
 ```
 
 ## Alert Configuration

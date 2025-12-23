@@ -14,22 +14,24 @@ Detects when S3 buckets are made publicly accessible, potentially exposing sensi
 
 ```sql
 from cloud.aws.cloudtrail
-where eventSource = "s3.amazonaws.com"
-  and eventName in ("PutBucketAcl", "PutBucketPolicy", "PutBucketPublicAccessBlock", "DeleteBucketPublicAccessBlock")
-  and (requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI = "http://acs.amazonaws.com/groups/global/AllUsers"
-    or requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI = "http://acs.amazonaws.com/groups/global/AuthenticatedUsers"
-    or requestParameters like "%AllUsers%"
-    or requestParameters.PublicAccessBlockConfiguration.BlockPublicAcls = "false")
-select
-  eventdate,
-  userIdentity.principalId,
-  userIdentity.arn,
-  eventName,
-  requestParameters.bucketName as bucket_name,
-  requestParameters,
-  sourceIPAddress,
-  userAgent,
-  awsRegion
+select eventdate
+select userIdentity.principalId
+select userIdentity.arn
+select eventName
+select requestParameters.bucketName as bucket_name
+select requestParameters
+select sourceIPAddress
+select userAgent
+select awsRegion
+select mm2country(sourceIPAddress) as source_country
+select mm2city(sourceIPAddress) as source_city
+where weakhas(eventSource, "s3.amazonaws.com")
+  and `in`("PutBucketAcl", "PutBucketPolicy", "PutBucketPublicAccessBlock",
+           "DeleteBucketPublicAccessBlock", eventName)
+  and (weakhas(requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI, "AllUsers")
+    or weakhas(requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI, "AuthenticatedUsers")
+    or weakhas(requestParameters, "AllUsers")
+    or weakhas(requestParameters.PublicAccessBlockConfiguration.BlockPublicAcls, "false"))
 group by bucket_name, userIdentity.arn, eventName
 ```
 

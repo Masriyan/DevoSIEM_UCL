@@ -14,23 +14,21 @@ Detects cryptocurrency mining activity identified by AWS GuardDuty, indicating c
 
 ```sql
 from cloud.aws.guardduty
-where type like "%CryptoCurrency%"
-  or type = "CryptoCurrency:EC2/BitcoinTool.B!DNS"
-  or type = "CryptoCurrency:EC2/BitcoinTool.B"
+select eventdate
+select accountid
+select region
+select resource.instanceDetails.instanceId as instance_id
+select resource.instanceDetails.imageId as ami_id
+select type
+select title
+select description
+select severity
+select service.action.networkConnectionAction.remoteIpDetails.ipAddressV4 as mining_pool_ip
+select service.action.networkConnectionAction.remotePortDetails.port as mining_port
+select resource.instanceDetails.tags
+select mm2country(service.action.networkConnectionAction.remoteIpDetails.ipAddressV4) as mining_pool_country
+where weakhas(type, "CryptoCurrency")
   and severity >= 7
-select
-  eventdate,
-  accountid,
-  region,
-  resource.instanceDetails.instanceId as instance_id,
-  resource.instanceDetails.imageId as ami_id,
-  type,
-  title,
-  description,
-  severity,
-  service.action.networkConnectionAction.remoteIpDetails.ipAddressV4 as mining_pool_ip,
-  service.action.networkConnectionAction.remotePortDetails.port as mining_port,
-  resource.instanceDetails.tags
 group by accountid, instance_id, type
 ```
 

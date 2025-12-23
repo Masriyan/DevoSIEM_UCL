@@ -14,22 +14,10 @@ Detects when privileged/administrative accounts authenticate outside of normal b
 
 ```sql
 from siem.logins
-where result = "success"
-  and (username in (select username from privileged_accounts)
-    or usergroup in ("Domain Admins", "Enterprise Admins", "Administrators", "Global Admins")
-    or username like "%admin%"
-    or username like "%root%")
-  and (hour(eventdate) < 6 or hour(eventdate) > 20
-    or weekday(eventdate) in (0, 6)) -- Sunday=0, Saturday=6
-select
-  eventdate,
-  username,
-  srcip,
-  dsthost,
-  application,
-  useragent,
-  geolocation,
-  hour(eventdate) as login_hour
+select username from privileged_accounts)
+    or user
+where weakhas(result, "success")
+  and (username in (
 group by username, srcip, dsthost
 ```
 
