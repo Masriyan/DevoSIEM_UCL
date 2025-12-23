@@ -168,22 +168,23 @@ Place your use case in the appropriate category:
 
 ### Existing Categories
 - `Firewall/` - Firewall vendor-specific rules
-  - `PaloAlto/`
-  - `Fortinet/`
-  - `Checkpoint/`
+  - `PaloAlto/` (4 use cases)
+  - `Fortinet/` (4 use cases)
+  - `Checkpoint/` (3 use cases)
 - `Cloud/` - Cloud platform security
-  - `AWS/`
-  - `Azure/`
-  - `GCP/`
-- `IAM/` - Identity and authentication
-- `ImpossibleTravel/` - Geographic anomalies
-- `InsiderThreat/` - Insider threat detection
-- `WAF/` - Web application firewall
-- `EDR/` - Endpoint detection
-- `EmailSecurity/` - Email threats
-- `Network/` - Network security
-- `Correlation/` - Multi-source correlation
-- `DLP/` - Data loss prevention
+  - `AWS/` (6 use cases)
+  - `Azure/` (5 use cases)
+  - `GCP/` (4 use cases)
+- `ThreatIntelligence/` - Threat intelligence and IOC matching (4 use cases) 🆕
+- `IAM/` - Identity and authentication (3 use cases)
+- `ImpossibleTravel/` - Geographic anomalies (2 use cases)
+- `InsiderThreat/` - Insider threat detection (2 use cases)
+- `WAF/` - Web application firewall (2 use cases)
+- `EDR/` - Endpoint detection (2 use cases)
+- `EmailSecurity/` - Email threats (1 use case)
+- `Network/` - Network security (1 use case)
+- `Correlation/` - Multi-source correlation (1 use case)
+- `DLP/` - Data loss prevention (1 use case)
 - `WebProxy/` - Web proxy logs
 - `DNS/` - DNS security
 
