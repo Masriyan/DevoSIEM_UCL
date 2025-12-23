@@ -1,6 +1,10 @@
 # DEVO SIEM Use Case Library
 
+![DEVO SIEM Use Case Library](devosiem_banner.png)
+
 A comprehensive collection of SIEM detection rules and use cases for DEVO Security Operations Platform.
+
+> **⚠️ Important Notice:** This is a community-driven project and is **NOT officially affiliated with, sponsored by, or endorsed by DEVO Technology**. This library is independently created and maintained for educational and professional use by security practitioners.
 
 ## Overview
 
@@ -286,15 +290,32 @@ New use cases should include:
 
 - **[INDEX.md](INDEX.md)** - Complete index of all use cases organized by category and severity
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for adding new use cases
+- **[BANNER_INFO.md](BANNER_INFO.md)** - Information about creating the repository banner image
 - Individual use case files with detailed documentation
 
 ## Disclaimer
+
+### Community Project Notice
+
+**This project is NOT officially affiliated with, sponsored by, or endorsed by DEVO Technology or any DEVO-related entity.**
+
+- This is an **independent, community-driven project** created by security professionals for security professionals
+- The author is **not employed by or representing DEVO Technology**
+- DEVO SIEM® is a registered trademark of DEVO Technology Inc.
+- All use cases and content are provided **"as-is"** without any warranty or official support from DEVO
+- For official DEVO documentation, please visit: [https://docs.devo.com/](https://docs.devo.com/)
+- For official DEVO support, contact DEVO Technology directly
+
+### Use Case Disclaimer
 
 These use cases are provided as templates and should be tested and tuned for your specific environment. Always validate rules in a non-production environment first. Detection effectiveness may vary based on:
 - Data source availability and quality
 - Environment-specific configurations
 - Baseline normal behavior
 - Threat landscape evolution
+- DEVO platform version and features
+
+**No Warranty:** The author provides these use cases without any warranty, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
 
 ## Support
 
@@ -340,3 +361,11 @@ See [LICENSE](LICENSE) file for details.
 **Contribute** by submitting new use cases or improvements!
 
 **Share** with your security operations team!
+
+---
+
+## 🎨 Repository Banner
+
+The repository banner image (`devosiem_banner.png`) should be created and placed in the root directory. See [BANNER_INFO.md](BANNER_INFO.md) for design guidelines, specifications, and tools to create a professional banner for this repository.
+
+**Note:** Ensure the banner does not use official DEVO Technology branding to maintain clear distinction as a community project.
