@@ -169,15 +169,15 @@ Comprehensive index of all detection rules organized by category and severity.
 
 ### By Severity
 - **CRITICAL**: 18 use cases
-- **HIGH**: 16 use cases
+- **HIGH**: 17 use cases
 - **MEDIUM**: 7 use cases
-- **LOW**: 2 use cases
+- **LOW**: 3 use cases
 
-**Total**: 43 production-ready use cases
+**Total**: 45 production-ready use cases
 
 ### By Category
 - **Firewall**: 11 use cases (Palo Alto: 4, Fortinet: 4, Checkpoint: 3)
-- **Cloud**: 17 use cases (AWS: 6, Azure: 5, GCP: 4)
+- **Cloud**: 15 use cases (AWS: 6, Azure: 5, GCP: 4)
 - **Threat Intelligence**: 4 use cases (NEW!)
 - **IAM**: 3 use cases
 - **Impossible Travel**: 2 use cases
@@ -194,15 +194,18 @@ Comprehensive index of all detection rules organized by category and severity.
 ## Recent Additions (v1.1.0)
 
 ### Threat Intelligence (NEW Category!)
+Added 4 comprehensive threat intelligence use cases:
 - IOC Match with Known Malware (CRITICAL)
 - APT Infrastructure Communication (HIGH)
 - TOR/VPN/Anonymization Usage (HIGH)
 - Newly Registered Domain Access (MEDIUM)
 
 ### Expanded Cloud Coverage
-- **AWS**: Lambda Backdoor, Secrets Manager Access
-- **Azure**: Service Principal Credential Addition
-- **GCP**: Compute Instance External IP
+Added 7 new cloud security use cases:
+- **AWS**: Lambda Backdoor Detection, Secrets Manager Access Monitoring (2 new)
+- **Azure**: Service Principal Credential Tracking (1 new)
+- **GCP**: Compute Instance External IP Exposure (1 new)
+- **Total Cloud Use Cases**: 15 (previously 11)
 
 ---
 
@@ -295,9 +298,17 @@ To add new use cases:
 
 ## Version Control
 
-- v1.0.0 - Initial release with 32 use cases
-- v1.1.0 - Added Threat Intelligence (4 use cases) + Expanded Cloud (7 use cases)
-- Repository: https://github.com/Masriyan/DevoSIEM_UCL
+- **v1.1.0** (Current) - Major expansion with Threat Intelligence + Cloud coverage
+  - Total: 45 use cases (+41% increase from v1.0.0)
+  - NEW: Threat Intelligence category (4 use cases)
+  - EXPANDED: Cloud coverage from 11 to 15 use cases (+4 new)
+  - Added: AWS Lambda, Secrets Manager, Azure Service Principals, GCP External IPs
+
+- **v1.0.0** - Initial release
+  - Total: 32 use cases
+  - Coverage: Firewall (11), Cloud (11), IAM (3), and other categories
+
+Repository: https://github.com/Masriyan/DevoSIEM_UCL
 
 ---
 
