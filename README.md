@@ -1378,16 +1378,9 @@ Comprehensive coverage
 
 </div>
 
----
 
-## 🎨 Repository Banner
-
-The repository banner image (`devosiem_banner.png`) should be created and placed in the root directory. See [BANNER_INFO.md](BANNER_INFO.md) for design guidelines, specifications, and tools to create a professional banner for this repository.
-
-**Note:** Ensure the banner does not use official DEVO Technology branding to maintain clear distinction as a community project.
 
 ---
-
 <div align="center">
 
 ### Made with ❤️ for the Security Community
@@ -1399,5 +1392,6 @@ The repository banner image (`devosiem_banner.png`) should be created and placed
 [![Open Source](https://img.shields.io/badge/Open-Source-blue?style=flat-square)](LICENSE)
 
 **Thank you for using the DEVO SIEM Use Case Library!**
+---
 
 </div>
