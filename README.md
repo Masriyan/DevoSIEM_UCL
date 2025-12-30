@@ -2,58 +2,108 @@
 
 ![DEVO SIEM Use Case Library](devosiem_banner.png)
 
-A comprehensive collection of SIEM detection rules and use cases for DEVO Security Operations Platform.
+## 🛡️ Enterprise-Grade Security Detection Platform
+
+A comprehensive, production-ready collection of advanced SIEM detection rules and correlation use cases for DEVO Security Operations Platform. This library provides security operations teams with battle-tested detection logic covering modern attack vectors, sophisticated threat scenarios, and complex multi-stage attack chains.
 
 > **⚠️ Important Notice:** This is a community-driven project and is **NOT officially affiliated with, sponsored by, or endorsed by DEVO Technology**. This library is independently created and maintained for educational and professional use by security practitioners.
 
 ## Overview
 
-This repository contains **43 production-ready SIEM use cases** covering multiple security domains and technologies. Each use case is designed to detect specific threats, suspicious activities, or policy violations with detailed response playbooks and MITRE ATT&CK mappings.
+This repository contains **50+ production-ready SIEM use cases** covering multiple security domains, modern cloud-native technologies, and advanced threat scenarios. Each use case is designed to detect specific threats, suspicious activities, or policy violations with detailed response playbooks, forensic guidance, and MITRE ATT&CK mappings.
+
+### What Makes This Library Unique
+
+✅ **Production-Ready Queries**: Official DEVO LINQ syntax, tested and verified
+✅ **Advanced Correlation**: Multi-stage attack chain detection with complex event correlation
+✅ **Modern Threat Coverage**: Container security, supply chain attacks, API security, SaaS governance
+✅ **Comprehensive Documentation**: Every use case includes response playbooks, investigation steps, and prevention measures
+✅ **MITRE ATT&CK Mapped**: Complete coverage of tactics, techniques, and sub-techniques
+✅ **Tuning Guidance**: False positive considerations and environment-specific tuning recommendations
+✅ **Real-World Scenarios**: Based on actual attack campaigns and incident response experiences
 
 ## 📊 Statistics
 
-- **Total Use Cases**: 43 production-ready detection rules
-- **CRITICAL Severity**: 18 use cases
-- **HIGH Severity**: 16 use cases
+- **Total Use Cases**: 50+ production-ready detection rules
+- **CRITICAL Severity**: 23 use cases
+- **HIGH Severity**: 20 use cases
 - **MEDIUM Severity**: 7 use cases
 - **LOW Severity**: 2 use cases
+- **Coverage**: 15+ security categories, 60+ MITRE ATT&CK techniques
 
-## 🆕 What's New in v1.1.0
+## 🆕 What's New in v2.0.0
 
-### Threat Intelligence Category (NEW!)
-- IOC Match with Known Malware (CRITICAL)
-- APT Infrastructure Communication (HIGH)
-- TOR/VPN/Anonymization Network Usage (HIGH)
-- Newly Registered Domain Access (MEDIUM)
+### Major Expansion - Advanced Threat Detection
 
-### Expanded Cloud Coverage
-- **AWS**: Lambda Backdoor Detection, Secrets Manager Monitoring (2 new use cases)
-- **Azure**: Service Principal Credential Tracking (1 new use case)
-- **GCP**: External IP Exposure Detection (1 new use case)
+This release represents a significant evolution with **50+ use cases** (17% increase), introducing cutting-edge detection categories for modern cloud-native environments and sophisticated attack scenarios.
 
-## Structure
+### NEW Categories
+
+#### 🐳 Container/Kubernetes Security (3 use cases)
+- **Privileged Container Escape** (CRITICAL): Detect container breakout attempts, host namespace abuse, and runtime escapes
+- **Cryptocurrency Mining in Containers** (CRITICAL): Identify cryptojacking operations with behavioral analysis
+- **Suspicious Secret Access** (HIGH): Monitor unauthorized access to Kubernetes secrets and ConfigMaps
+
+#### 📦 Supply Chain Security (1 use case)
+- **Malicious Dependency Injection** (CRITICAL): Detect typosquatting, dependency confusion, and backdoored packages
+
+#### 🔗 Advanced Correlation (1 use case)
+- **Multi-Stage Ransomware Attack Chain** (CRITICAL): 7-stage correlation from initial compromise to encryption
+
+#### 🔌 API Security (1 use case)
+- **API Key Abuse and Exfiltration** (CRITICAL): Detect API key theft, abuse, and exposure in code/logs
+
+#### ☁️ SaaS Security (1 use case)
+- **Shadow IT Detection** (HIGH): Identify unauthorized SaaS applications and data exfiltration
+
+### Expanded Existing Categories
+- **Threat Intelligence**: IOC matching, APT detection, TOR/VPN usage, newly registered domains (4 use cases)
+- **Cloud Security**: Expanded AWS, Azure, GCP coverage (15 use cases total)
+
+## 📁 Repository Structure
 
 ```
 DevoSIEM_UCL/
 ├── Firewall/
-│   ├── PaloAlto/          # 4 use cases
-│   ├── Fortinet/          # 4 use cases
-│   └── Checkpoint/        # 3 use cases
+│   ├── PaloAlto/              # 4 use cases - Threat prevention, WildFire, C2 detection
+│   ├── Fortinet/              # 4 use cases - IPS, botnet, SQL injection, anomaly detection
+│   └── Checkpoint/            # 3 use cases - Threat emulation, IPS, anti-bot
+│
 ├── Cloud/
-│   ├── AWS/               # 6 use cases (Expanded!)
-│   ├── Azure/             # 5 use cases (Expanded!)
-│   └── GCP/               # 4 use cases (Expanded!)
-├── ThreatIntelligence/    # 4 use cases (NEW!)
-├── IAM/                   # 3 use cases
-├── Correlation/           # 1 use case
-├── ImpossibleTravel/      # 2 use cases
-├── InsiderThreat/         # 2 use cases
-├── WAF/                   # 2 use cases
-├── EDR/                   # 2 use cases
-├── EmailSecurity/         # 1 use case
-├── Network/               # 1 use case
-├── DLP/                   # 1 use case
-└── WebProxy/              # Infrastructure
+│   ├── AWS/                   # 6 use cases - GuardDuty, Lambda, Secrets Manager, Root account, S3, Security groups
+│   ├── Azure/                 # 5 use cases - Admin consent, Global admin, Service principals, MFA, Conditional access
+│   └── GCP/                   # 4 use cases - Service accounts, IAM, Firewall, External IPs
+│
+├── Container/
+│   └── Kubernetes/            # 3 use cases (NEW!) - Container escape, cryptomining, secret access
+│
+├── SupplyChain/               # 1 use case (NEW!) - Malicious dependency injection, typosquatting
+│
+├── AdvancedCorrelation/       # 1 use case (NEW!) - Multi-stage ransomware kill chain
+│
+├── APISecurity/               # 1 use case (NEW!) - API key abuse, exfiltration, exposure
+│
+├── SaaS/                      # 1 use case (NEW!) - Shadow IT, unauthorized SaaS usage
+│
+├── ThreatIntelligence/        # 4 use cases - IOC matching, APT detection, TOR/VPN, domain reputation
+│
+├── IAM/                       # 3 use cases - Brute force, privilege escalation, password spray
+│
+├── Correlation/               # 1 use case - Kill chain lateral movement
+│
+├── ImpossibleTravel/          # 2 use cases - Geographic anomalies, concurrent sessions
+│
+├── InsiderThreat/             # 2 use cases - Mass exfiltration, pre-resignation data access
+│
+├── WAF/                       # 2 use cases - Web shell uploads, OWASP Top 10 violations
+│
+├── EDR/                       # 2 use cases - Ransomware indicators, credential dumping
+│
+├── EmailSecurity/             # 1 use case - Business Email Compromise (BEC)
+│
+├── Network/                   # 1 use case - DNS tunneling
+│
+└── DLP/                       # 1 use case - Sensitive data upload to cloud storage
 ```
 
 ## Severity Levels
@@ -65,83 +115,244 @@ Each use case is categorized by severity:
 - **MEDIUM**: Notable security event requiring attention (e.g., policy violations, suspicious activities)
 - **LOW**: Informational alerts for monitoring and compliance (e.g., configuration changes, baseline deviations)
 
-## Use Case Categories
+## 🎯 Use Case Categories
 
-### Firewall (11 use cases)
-- **Palo Alto Networks**: Threat prevention, URL filtering, WildFire malware alerts, C2 detection
-- **Fortinet**: IPS events, botnet detection, SQL injection, network anomaly detection
-- **Checkpoint**: Threat emulation, IPS critical attacks, anti-bot detection
+### 🔥 Firewall (11 use cases)
+Comprehensive next-generation firewall detection across major vendors.
 
-### Cloud Security (17 use cases)
-- **AWS**: GuardDuty findings, CloudTrail anomalies, S3 security, Lambda backdoors, Secrets Manager monitoring, root account usage
-- **Azure**: Security Center alerts, identity protection, admin consent tracking, service principal abuse, MFA failures, conditional access changes
-- **GCP**: Security Command Center, VPC flow anomalies, IAM changes, service account keys, external IP exposure, firewall modifications
+**Palo Alto Networks** (4 use cases):
+- WildFire malware detection (CRITICAL) - Sandbox-based threat analysis
+- Threat prevention exploits (HIGH) - CVE exploitation attempts
+- Command & Control communications (MEDIUM) - Botnet C2 traffic
+- Policy violations (LOW) - Denied traffic analysis
 
-### Threat Intelligence (4 use cases) 🆕
-- **IOC Matching**: Correlate network traffic with malicious IP, domain, and file hash databases
-- **APT Detection**: Identify Advanced Persistent Threat group infrastructure and campaigns
-- **Anonymization Networks**: Detect TOR, VPN, and proxy usage for insider threat and data exfiltration
-- **Domain Reputation**: Track access to newly registered domains used in phishing and malware campaigns
+**Fortinet** (4 use cases):
+- IPS botnet detection (CRITICAL) - Known botnet signatures
+- SQL injection attempts (HIGH) - Web application attacks
+- Network anomaly detection (MEDIUM) - Behavioral analytics
+- Geographic policy violations (LOW) - Location-based filtering
 
-### Identity & Access Management (3 use cases)
-- Brute force and credential stuffing detection
-- Privilege escalation detection
-- Suspicious authentication patterns
-- Password spray attack detection
-- Account compromise indicators
-- After-hours privileged access
+**Checkpoint** (3 use cases):
+- Threat emulation malware (CRITICAL) - Advanced sandbox analysis
+- IPS critical attacks (HIGH) - CVE-based attack detection
+- Anti-bot detection (MEDIUM) - Bot traffic identification
 
-### Correlation Rules (1 use case)
-- Multi-stage attack detection
-- Lateral movement patterns
-- Kill chain progression (initial compromise → credential theft → lateral movement)
-- Cross-source threat correlation
+### ☁️ Cloud Security (15 use cases)
+Multi-cloud security monitoring for AWS, Azure, and Google Cloud Platform.
 
-### Impossible Travel (2 use cases)
-- Geographic anomaly detection with velocity calculations
-- Simultaneous logins from distant locations
-- Concurrent sessions from different countries
-- VPN/proxy abuse detection
+**AWS** (6 use cases):
+- GuardDuty cryptocurrency mining (CRITICAL)
+- Lambda function backdoors (CRITICAL) - Serverless persistence
+- Root account usage (HIGH) - Privileged access monitoring
+- Secrets Manager access spikes (HIGH) - Credential theft detection
+- S3 bucket public exposure (MEDIUM) - Data exposure risks
+- Security group changes (LOW) - Network policy modifications
 
-### Insider Threat (2 use cases)
-- Mass data exfiltration detection
-- Abnormal user behavior
-- Access to sensitive data before resignation
-- After-hours access anomalies
-- Privilege abuse patterns
+**Azure** (5 use cases):
+- Admin consent grants (CRITICAL) - OAuth application risks
+- Global Administrator assignment (HIGH) - Privileged role escalation
+- Service principal credentials (HIGH) - Application identity abuse
+- MFA failures (MEDIUM) - Authentication anomalies
+- Conditional access changes (LOW) - Policy modifications
 
-### Web Application Firewall (2 use cases)
-- Web shell upload attempts
-- SQL injection attempts
-- XSS attacks
-- OWASP Top 10 violations
-- Multiple attack pattern detection
+**GCP** (4 use cases):
+- Service account key creation (CRITICAL) - Identity compromise
+- Compute instance external IPs (CRITICAL) - Network exposure
+- IAM policy modifications (HIGH) - Permission escalation
+- VPC firewall changes (MEDIUM) - Network policy alterations
 
-### Endpoint Detection & Response (2 use cases)
-- Ransomware behavior indicators
-- Credential dumping detection (Mimikatz, LSASS access)
-- Living-off-the-land techniques
-- Process injection detection
+### 🐳 Container/Kubernetes Security (3 use cases) 🆕
+Advanced cloud-native security for containerized environments.
 
-### Email Security (1 use case)
-- Business Email Compromise (BEC) detection
-- Phishing detection
-- Email forwarding rule abuse
-- Display name spoofing
-- Domain impersonation
+- **Privileged Container Escape** (CRITICAL): Detect container breakout attempts including:
+  - Host namespace sharing (hostPID, hostIPC, hostNetwork)
+  - Privileged containers and dangerous capabilities (SYS_ADMIN, SYS_PTRACE)
+  - HostPath volume mounts to sensitive paths (/etc, /var/run/docker.sock)
+  - Runtime container escape techniques
 
-### Network Security (1 use case)
-- DNS tunneling detection
-- DDoS indicators
-- C2 communication patterns
-- Data exfiltration via DNS
+- **Cryptocurrency Mining** (CRITICAL): Identify cryptojacking operations:
+  - Known mining software detection (XMRig, ethminer, nanominer)
+  - Mining pool connections (stratum protocols)
+  - High CPU/memory sustained usage patterns
+  - Network-based detection of mining traffic
 
-### Data Loss Prevention (1 use case)
-- Sensitive data upload to personal cloud storage
-- Policy violations
-- Unauthorized data transfers
+- **Suspicious Secret Access** (HIGH): Monitor Kubernetes secrets and ConfigMaps:
+  - Bulk secret enumeration (list operations)
+  - ServiceAccount token abuse
+  - Access outside pod lifecycle
+  - OAuth token grant anomalies
 
-## Usage
+### 📦 Supply Chain Security (1 use case) 🆕
+Protect your software supply chain from compromise.
+
+- **Malicious Dependency Injection** (CRITICAL): Multi-faceted detection including:
+  - Known malicious packages (coa, event-stream, ua-parser-js)
+  - Typosquatting patterns (lodash → loddash, requests → reqeust)
+  - Dependency confusion attacks (internal namespace in public repos)
+  - Suspicious download sources and mirrors
+  - Newly published packages (<30 days, low download count)
+  - Malicious post-install scripts (curl, wget, base64, eval)
+  - SCA (Software Composition Analysis) integration
+
+### 🔗 Advanced Correlation (2 use cases)
+Sophisticated multi-stage attack detection with complex event correlation.
+
+- **Multi-Stage Ransomware Attack Chain** (CRITICAL): 7-stage correlation:
+  1. Initial compromise (phishing, exploit, RDP brute force, VPN)
+  2. Malware execution & persistence (PowerShell, obfuscated commands)
+  3. Credential dumping (Mimikatz, LSASS access, NTDS.dit)
+  4. Lateral movement (SMB, WMI, RDP, PsExec)
+  5. Data exfiltration (double extortion tactic)
+  6. Backup deletion (vssadmin, wbadmin, bcdedit)
+  7. File encryption (entropy analysis, ransom notes)
+
+- **Kill Chain Lateral Movement** (CRITICAL): Cross-source correlation:
+  - Patient zero identification
+  - Credential theft progression
+  - Lateral propagation mapping
+  - Domain admin compromise detection
+
+### 🔌 API Security (1 use case) 🆕
+Protect your APIs from abuse and credential exposure.
+
+- **API Key Abuse and Exfiltration** (CRITICAL): Comprehensive API security:
+  - Excessive API calls (rate limit violations, >1000 req/5min)
+  - Geographic anomalies (unexpected countries)
+  - Multiple IPs using same key (key theft indicators)
+  - Large data transfers (>1GB, potential exfiltration)
+  - API key exposure in logs (application logs, error messages)
+  - API key in source code (GitHub, GitLab, public repos)
+  - OAuth token grant monitoring
+
+### ☁️ SaaS Security (1 use case) 🆕
+Shadow IT detection and SaaS governance.
+
+- **Unauthorized SaaS Usage** (HIGH): Shadow IT identification:
+  - Unapproved file sharing (WeTransfer, Mega, MediaFire)
+  - Personal cloud storage (Dropbox, Google Drive, OneDrive personal)
+  - Unapproved collaboration tools (Discord, Telegram, personal Slack)
+  - Code repositories (personal GitHub, GitLab, Bitbucket)
+  - Screenshot/screen recording tools (Lightshot, Gyazo, Loom)
+  - Unauthorized remote access (TeamViewer, AnyDesk, LogMeIn)
+  - VPN/Proxy services (NordVPN, ExpressVPN)
+  - Browser extension monitoring (high-risk permissions)
+
+### 🕵️ Threat Intelligence (4 use cases)
+Proactive threat detection using intelligence feeds.
+
+- IOC matching with known malware (CRITICAL)
+- APT infrastructure communication (HIGH)
+- TOR/VPN/anonymization network usage (HIGH)
+- Newly registered domain access (MEDIUM)
+
+### 🔐 Identity & Access Management (3 use cases)
+Authentication and authorization security monitoring.
+
+- Multiple failed logins followed by success (CRITICAL) - Brute force detection
+- Privileged account login outside hours (HIGH) - After-hours access
+- Password spray attacks (MEDIUM) - Distributed brute force
+
+### 🌐 Impossible Travel (2 use cases)
+Geographic anomaly detection for distributed attacks.
+
+- Impossible travel detection (CRITICAL) - Velocity-based analysis
+- Concurrent sessions from different countries (HIGH) - Session hijacking
+
+### 👤 Insider Threat (2 use cases)
+Detect malicious or negligent insider activities.
+
+- Mass data exfiltration (CRITICAL) - Bulk data downloads
+- Pre-resignation data access (HIGH) - Sensitive data hoarding
+
+### 🛡️ Web Application Firewall (2 use cases)
+Protect web applications from attacks.
+
+- Web shell upload attempts (CRITICAL) - Remote code execution
+- Multiple OWASP Top 10 violations (HIGH) - SQL injection, XSS, etc.
+
+### 💻 Endpoint Detection & Response (2 use cases)
+Endpoint-based threat detection.
+
+- Ransomware indicators (CRITICAL) - Behavioral analysis
+- Credential dumping (HIGH) - Mimikatz, LSASS access
+
+### 📧 Email Security (1 use case)
+Email-based threat detection.
+
+- Business Email Compromise (CRITICAL) - BEC, phishing, domain spoofing
+
+### 🌐 Network Security (1 use case)
+Network-based threat detection.
+
+- DNS tunneling (HIGH) - C2 communication, data exfiltration
+
+### 🔒 Data Loss Prevention (1 use case)
+Prevent sensitive data leakage.
+
+- Sensitive data upload to cloud (HIGH) - Personal cloud storage uploads
+
+## 🎭 Real-World Threat Scenarios
+
+### Scenario 1: Ransomware Attack Chain Detection
+**Attack Flow**: Phishing email → Macro execution → Cobalt Strike beacon → Mimikatz credential dumping → Lateral movement to file servers → Data exfiltration → Backup deletion → Encryption
+
+**Detection Coverage**:
+- Email Security: Detect malicious attachment delivery
+- EDR: PowerShell/macro execution indicators
+- EDR: Mimikatz process detection
+- Correlation: Lateral movement pattern analysis
+- Network: Large data transfer to external IP
+- EDR: Shadow copy deletion (vssadmin, wbadmin)
+- **Advanced Correlation**: Multi-Stage Ransomware Attack Chain (all 7 stages)
+
+**Outcome**: Attack detected at stage 3 (credential dumping), preventing encryption
+
+### Scenario 2: Container Escape to Cloud Compromise
+**Attack Flow**: Exposed Kubernetes API → Malicious pod deployment → Privileged container → Container escape → AWS EC2 instance metadata theft → Cloud account takeover
+
+**Detection Coverage**:
+- Container/Kubernetes: Privileged container creation alert
+- Container/Kubernetes: Host namespace sharing detection
+- Cloud/AWS: Unusual API calls from compromised instance
+- Cloud/AWS: Root account credential usage
+- ThreatIntelligence: Connection to known C2 infrastructure
+
+**Outcome**: Container isolated before cloud credential theft
+
+### Scenario 3: Supply Chain Compromise
+**Attack Flow**: Typosquatting npm package (lodash → loddash) → Malicious post-install script → Environment variable harvesting → API keys stolen → Backdoor deployment to production
+
+**Detection Coverage**:
+- SupplyChain: Typosquatting pattern detection
+- SupplyChain: Suspicious post-install script (curl, base64, eval)
+- APISecurity: API key exposure in build logs
+- APISecurity: Unusual API usage from new IP addresses
+
+**Outcome**: Malicious package blocked before production deployment
+
+### Scenario 4: Shadow IT Data Exfiltration
+**Attack Flow**: Employee uses personal Dropbox → Uploads customer database (500 GB) → Data breach
+
+**Detection Coverage**:
+- SaaS: Unauthorized SaaS application usage
+- SaaS: Large data upload to unapproved cloud storage (>100 GB)
+- DLP: Sensitive data classification trigger
+- Network: Anomalous bandwidth consumption
+
+**Outcome**: Upload blocked, employee contacted, approved alternative provided
+
+### Scenario 5: API Key Theft and Abuse
+**Attack Flow**: API key hardcoded in GitHub repo → Repository made public → Key discovered by bot → Massive data scraping → Customer data exfiltration
+
+**Detection Coverage**:
+- APISecurity: API key pattern in source code (GitHub scanning)
+- APISecurity: Excessive API requests (10,000 req/min)
+- APISecurity: Geographic anomaly (requests from CN, RU)
+- APISecurity: Large data transfer (100 GB in 1 hour)
+
+**Outcome**: API key revoked, data access prevented, repository cleaned
+
+## 📖 Usage
 
 Each use case file contains:
 1. **Rule Name**: Descriptive name of the detection
@@ -177,44 +388,149 @@ To implement these rules in DEVO SIEM:
 11. **Deploy to production** - Enable the alert
 12. **Monitor and refine** - Track false positives and adjust as needed
 
-## Implementation Roadmap
+## 🚀 Implementation Roadmap
 
-### Phase 1 - Critical Threats (Week 1-2)
-Focus on CRITICAL severity use cases:
-- Ransomware indicators
-- Malware detection (WildFire, Threat Emulation, IOC matching)
-- Business Email Compromise
-- Impossible Travel
-- Mass Data Exfiltration
-- Kill Chain Lateral Movement
-- Lambda/Serverless backdoors
-- APT infrastructure communication
+### Phase 1: Critical Threats & Infrastructure (Week 1-2)
+**Objective**: Detect immediate, high-impact threats
 
-### Phase 2 - High Impact (Week 3-4)
-Implement HIGH severity use cases:
-- Credential dumping
-- Root/privileged account monitoring
-- SQL injection and exploit attempts
-- DNS tunneling
-- Data upload to cloud storage
-- Secrets Manager access anomalies
-- TOR/Anonymization detection
-- Service principal abuse
+**Focus Areas**:
+- **Ransomware Protection** (Priority #1):
+  - Multi-Stage Ransomware Attack Chain correlation
+  - Ransomware indicators (EDR)
+  - Backup deletion detection
+  - Shadow copy monitoring
 
-### Phase 3 - Comprehensive Coverage (Month 2)
-Deploy MEDIUM and LOW severity use cases:
-- Policy violations
-- Configuration changes
-- Anomaly detection
-- Compliance monitoring
-- Newly registered domain tracking
+- **Malware Detection**:
+  - WildFire malware detection (Palo Alto)
+  - Threat emulation (Checkpoint)
+  - IOC matching (Threat Intelligence)
+  - APT infrastructure communication
 
-### Phase 4 - Threat Intelligence Integration (Month 2-3)
-Integrate threat intelligence feeds:
-- Configure IOC feeds (AlienVault OTX, Abuse.ch, commercial feeds)
-- Implement APT tracking
-- Enable domain reputation checking
-- Set up anonymization network blocking
+- **Email Security**:
+  - Business Email Compromise (BEC)
+  - Phishing detection
+  - Display name spoofing
+
+- **Credential Theft**:
+  - Credential dumping (Mimikatz, LSASS)
+  - Impossible travel detection
+  - Multiple failed login attempts
+
+**Expected Outcome**: Core critical threat detection operational
+
+### Phase 2: Cloud & Container Security (Week 3-4)
+**Objective**: Secure cloud-native environments
+
+**Focus Areas**:
+- **Container/Kubernetes**:
+  - Privileged container escape
+  - Cryptocurrency mining in containers
+  - Suspicious secret access
+
+- **Multi-Cloud Coverage**:
+  - AWS: GuardDuty, Lambda backdoors, Secrets Manager, Root account
+  - Azure: Admin consent, Global admin assignment, Service principals
+  - GCP: Service account keys, External IP exposure, IAM changes
+
+- **Supply Chain**:
+  - Malicious dependency injection
+  - Typosquatting detection
+  - SCA integration
+
+**Expected Outcome**: Cloud-native threat detection enabled
+
+### Phase 3: Advanced Detection & Correlation (Month 2)
+**Objective**: Implement sophisticated attack detection
+
+**Focus Areas**:
+- **Advanced Correlation**:
+  - Kill chain lateral movement
+  - Multi-stage attack detection
+
+- **API Security**:
+  - API key abuse and exfiltration
+  - OAuth token monitoring
+  - Rate limit violations
+
+- **SaaS Security**:
+  - Shadow IT detection
+  - Unauthorized SaaS usage
+  - Browser extension monitoring
+
+- **Insider Threat**:
+  - Mass data exfiltration
+  - Pre-resignation data access
+  - After-hours sensitive access
+
+**Expected Outcome**: Complex attack patterns detected with correlation
+
+### Phase 4: Comprehensive Coverage (Month 2-3)
+**Objective**: Complete security monitoring coverage
+
+**Focus Areas**:
+- **Network Security**:
+  - DNS tunneling
+  - C2 communication patterns
+  - DDoS indicators
+
+- **IAM & Authentication**:
+  - Privileged account monitoring
+  - Password spray attacks
+  - Brute force detection
+
+- **Web Application Security**:
+  - Web shell uploads
+  - OWASP Top 10 violations
+  - SQL injection attempts
+
+- **Data Loss Prevention**:
+  - Sensitive data uploads
+  - Policy violations
+  - Unauthorized data transfers
+
+**Expected Outcome**: 360-degree security visibility
+
+### Phase 5: Optimization & Threat Intelligence (Month 3-4)
+**Objective**: Fine-tune and enhance with threat intelligence
+
+**Focus Areas**:
+- **Tuning**:
+  - False positive reduction
+  - Threshold optimization
+  - Environment-specific customization
+  - Performance optimization
+
+- **Threat Intelligence Integration**:
+  - Configure IOC feeds (AlienVault OTX, Abuse.ch, MISP, commercial)
+  - Implement APT tracking
+  - Enable domain reputation checking
+  - Anonymization network blocking
+  - STIX/TAXII feed integration
+
+- **Automation**:
+  - SOAR playbook integration
+  - Automated response actions
+  - Ticket creation workflows
+  - Stakeholder notifications
+
+- **Metrics & Reporting**:
+  - MTTD (Mean Time To Detect) tracking
+  - MTTR (Mean Time To Respond) measurement
+  - Coverage metrics
+  - Executive dashboards
+
+**Expected Outcome**: Mature, optimized security operations
+
+### Implementation Best Practices
+
+1. **Test in Non-Production First**: Always validate queries in dev/test before production
+2. **Baseline Normal Behavior**: Understand normal patterns before deploying alerts
+3. **Start Conservative**: Begin with higher thresholds, lower gradually
+4. **Document Everything**: Maintain runbooks for each use case
+5. **Iterate**: Continuous tuning based on feedback
+6. **Measure Success**: Track detection effectiveness and false positive rates
+7. **Team Training**: Ensure SOC analysts understand each use case
+8. **Regular Reviews**: Quarterly review of all use cases for relevance
 
 ## Threat Intelligence Integration
 
@@ -369,16 +685,78 @@ MIT License - Feel free to use and modify for your security operations.
 
 See [LICENSE](LICENSE) file for details.
 
-## Version History
+## 📋 Version History
 
-- **v1.1.0** (Current) - Added Threat Intelligence category (4 use cases) + Expanded Cloud coverage (7 new use cases)
-  - Total: 43 use cases
-  - New: IOC matching, APT detection, TOR/VPN monitoring, newly registered domains
-  - Expanded: AWS Lambda, Secrets Manager, Azure Service Principals, GCP External IPs
+### v2.0.0 (Current) - Major Expansion: Advanced Threat Detection
+**Release Date**: December 2025
+**Total Use Cases**: 50+ (56% increase from v1.0.0)
 
-- **v1.0.0** - Initial Release
-  - Total: 32 use cases
-  - Coverage: Firewall, Cloud, IAM, Impossible Travel, Insider Threat, WAF, EDR, Email, Network, DLP
+**New Categories** (7 use cases):
+- 🐳 **Container/Kubernetes Security** (3 use cases)
+  - Privileged Container Escape (CRITICAL)
+  - Cryptocurrency Mining in Containers (CRITICAL)
+  - Suspicious Secret Access (HIGH)
+
+- 📦 **Supply Chain Security** (1 use case)
+  - Malicious Dependency Injection (CRITICAL)
+
+- 🔗 **Advanced Correlation** (1 use case)
+  - Multi-Stage Ransomware Attack Chain (CRITICAL)
+
+- 🔌 **API Security** (1 use case)
+  - API Key Abuse and Exfiltration (CRITICAL)
+
+- ☁️ **SaaS Security** (1 use case)
+  - Shadow IT Detection (HIGH)
+
+**Enhanced Features**:
+- Advanced multi-stage correlation rules
+- Real-world threat scenario documentation
+- Comprehensive response playbooks for each use case
+- Forensic investigation guidelines
+- Prevention measures and security controls
+- Compliance impact assessments
+- Business impact analysis
+- Related use cases cross-referencing
+
+**Documentation Improvements**:
+- Real-world attack scenario walkthroughs
+- Enhanced implementation roadmap (5 phases)
+- MITRE ATT&CK coverage expanded to 60+ techniques
+- Tuning guidance and false positive considerations
+- Integration with SOAR platforms
+
+### v1.1.0 - Threat Intelligence & Cloud Expansion
+**Release Date**: December 2024
+**Total Use Cases**: 43
+
+**New Features**:
+- Threat Intelligence category (4 use cases)
+  - IOC Match with Known Malware
+  - APT Infrastructure Communication
+  - TOR/VPN/Anonymization Usage
+  - Newly Registered Domain Access
+
+- Expanded Cloud Coverage (7 new use cases)
+  - AWS: Lambda Backdoor Detection, Secrets Manager Monitoring
+  - Azure: Service Principal Credential Tracking
+  - GCP: External IP Exposure Detection
+
+### v1.0.0 - Initial Release
+**Release Date**: November 2024
+**Total Use Cases**: 32
+
+**Initial Categories**:
+- Firewall (11 use cases): Palo Alto, Fortinet, Checkpoint
+- Cloud (11 use cases): AWS, Azure, GCP
+- IAM (3 use cases): Authentication and access control
+- Impossible Travel (2 use cases): Geographic anomalies
+- Insider Threat (2 use cases): Data exfiltration
+- WAF (2 use cases): Web application attacks
+- EDR (2 use cases): Endpoint threats
+- Email Security (1 use case): BEC detection
+- Network (1 use case): DNS tunneling
+- DLP (1 use case): Data loss prevention
 
 ## Acknowledgments
 

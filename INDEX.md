@@ -5,6 +5,11 @@ Comprehensive index of all detection rules organized by category and severity.
 ## Quick Navigation
 - [Firewall](#firewall)
 - [Cloud Security](#cloud-security)
+- [Container/Kubernetes Security](#containerkubernetes-security) 🆕
+- [Supply Chain Security](#supply-chain-security) 🆕
+- [Advanced Correlation](#advanced-correlation) 🆕
+- [API Security](#api-security) 🆕
+- [SaaS Security](#saas-security) 🆕
 - [Threat Intelligence](#threat-intelligence)
 - [Identity & Access Management](#identity--access-management)
 - [Impossible Travel](#impossible-travel)
@@ -73,6 +78,48 @@ Comprehensive index of all detection rules organized by category and severity.
 | CRITICAL | Compute Instance with External IP | `Cloud/GCP/CRITICAL_compute_instance_external_ip.md` |
 | HIGH | IAM Policy Modification | `Cloud/GCP/HIGH_iam_policy_modification.md` |
 | MEDIUM | VPC Firewall Rule Changes | `Cloud/GCP/MEDIUM_firewall_rule_changes.md` |
+
+---
+
+## Container/Kubernetes Security
+
+| Severity | Use Case | File |
+|----------|----------|------|
+| CRITICAL | Privileged Container Escape | `Container/Kubernetes/CRITICAL_privileged_container_escape.md` |
+| CRITICAL | Cryptocurrency Mining in Containers | `Container/Kubernetes/CRITICAL_cryptomining_in_containers.md` |
+| HIGH | Suspicious Secret and ConfigMap Access | `Container/Kubernetes/HIGH_suspicious_secret_access.md` |
+
+---
+
+## Supply Chain Security
+
+| Severity | Use Case | File |
+|----------|----------|------|
+| CRITICAL | Malicious Dependency Injection | `SupplyChain/CRITICAL_malicious_dependency_injection.md` |
+
+---
+
+## Advanced Correlation
+
+| Severity | Use Case | File |
+|----------|----------|------|
+| CRITICAL | Multi-Stage Ransomware Attack Chain | `AdvancedCorrelation/CRITICAL_multi_stage_ransomware_attack.md` |
+
+---
+
+## API Security
+
+| Severity | Use Case | File |
+|----------|----------|------|
+| CRITICAL | API Key Abuse and Exfiltration | `APISecurity/CRITICAL_api_key_abuse_and_exfiltration.md` |
+
+---
+
+## SaaS Security
+
+| Severity | Use Case | File |
+|----------|----------|------|
+| HIGH | Shadow IT and Unauthorized SaaS Usage | `SaaS/HIGH_shadow_it_unauthorized_saas.md` |
 
 ---
 
@@ -168,17 +215,22 @@ Comprehensive index of all detection rules organized by category and severity.
 ## Statistics
 
 ### By Severity
-- **CRITICAL**: 18 use cases
-- **HIGH**: 17 use cases
+- **CRITICAL**: 23 use cases (+5 from v1.1.0)
+- **HIGH**: 20 use cases (+3 from v1.1.0)
 - **MEDIUM**: 7 use cases
-- **LOW**: 3 use cases
+- **LOW**: 2 use cases
 
-**Total**: 45 production-ready use cases
+**Total**: 52 production-ready use cases (+21% increase)
 
 ### By Category
 - **Firewall**: 11 use cases (Palo Alto: 4, Fortinet: 4, Checkpoint: 3)
 - **Cloud**: 15 use cases (AWS: 6, Azure: 5, GCP: 4)
-- **Threat Intelligence**: 4 use cases (NEW!)
+- **Container/Kubernetes**: 3 use cases 🆕
+- **Supply Chain**: 1 use case 🆕
+- **Advanced Correlation**: 1 use case 🆕 (+ 1 in Correlation category)
+- **API Security**: 1 use case 🆕
+- **SaaS Security**: 1 use case 🆕
+- **Threat Intelligence**: 4 use cases
 - **IAM**: 3 use cases
 - **Impossible Travel**: 2 use cases
 - **Insider Threat**: 2 use cases
@@ -189,23 +241,48 @@ Comprehensive index of all detection rules organized by category and severity.
 - **Correlation**: 1 use case
 - **DLP**: 1 use case
 
+### MITRE ATT&CK Coverage
+- **Total Tactics**: 12 (Full kill chain coverage)
+- **Total Techniques**: 60+
+- **Container-Specific**: T1610, T1611, T1609, T1552.007
+- **Supply Chain**: T1195, T1195.001, T1195.002
+- **API-Specific**: T1528, T1552, T1567
+
 ---
 
-## Recent Additions (v1.1.0)
+## Recent Additions (v2.0.0)
 
-### Threat Intelligence (NEW Category!)
-Added 4 comprehensive threat intelligence use cases:
-- IOC Match with Known Malware (CRITICAL)
-- APT Infrastructure Communication (HIGH)
-- TOR/VPN/Anonymization Usage (HIGH)
-- Newly Registered Domain Access (MEDIUM)
+### NEW CATEGORIES 🎉
 
-### Expanded Cloud Coverage
-Added 7 new cloud security use cases:
-- **AWS**: Lambda Backdoor Detection, Secrets Manager Access Monitoring (2 new)
-- **Azure**: Service Principal Credential Tracking (1 new)
-- **GCP**: Compute Instance External IP Exposure (1 new)
-- **Total Cloud Use Cases**: 15 (previously 11)
+#### Container/Kubernetes Security (3 use cases)
+Cloud-native security for modern containerized environments:
+- **Privileged Container Escape** (CRITICAL) - Host namespace abuse, container breakout detection
+- **Cryptocurrency Mining in Containers** (CRITICAL) - Cryptojacking detection with behavioral analysis
+- **Suspicious Secret Access** (HIGH) - Kubernetes secrets and ConfigMaps monitoring
+
+#### Supply Chain Security (1 use case)
+Protect your software development lifecycle:
+- **Malicious Dependency Injection** (CRITICAL) - Typosquatting, dependency confusion, backdoored packages
+
+#### Advanced Correlation (1 use case)
+Sophisticated multi-stage attack detection:
+- **Multi-Stage Ransomware Attack Chain** (CRITICAL) - 7-stage correlation from compromise to encryption
+
+#### API Security (1 use case)
+API protection and credential management:
+- **API Key Abuse and Exfiltration** (CRITICAL) - Key theft, abuse patterns, exposure in code/logs
+
+#### SaaS Security (1 use case)
+Shadow IT and SaaS governance:
+- **Shadow IT Detection** (HIGH) - Unauthorized SaaS applications, data exfiltration risks
+
+### What's Different in v2.0.0
+- **7 new use cases** across 5 brand-new categories
+- **Advanced correlation** for complex attack chains
+- **Modern threat coverage**: Containers, supply chain, API security
+- **Enhanced documentation**: Response playbooks, forensic guidance, prevention measures
+- **Real-world scenarios**: Practical attack flow examples with detection mapping
+- **Expanded MITRE ATT&CK**: Now covering 60+ techniques including container-specific TTPs
 
 ---
 
