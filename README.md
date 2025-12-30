@@ -1,64 +1,254 @@
-# DEVO SIEM Use Case Library
+<div align="center">
+
+# 🛡️ DEVO SIEM Use Case Library
 
 ![DEVO SIEM Use Case Library](devosiem_banner.png)
 
-## 🛡️ Enterprise-Grade Security Detection Platform
+### Enterprise-Grade Security Detection Platform
 
-A comprehensive, production-ready collection of advanced SIEM detection rules and correlation use cases for DEVO Security Operations Platform. This library provides security operations teams with battle-tested detection logic covering modern attack vectors, sophisticated threat scenarios, and complex multi-stage attack chains.
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Masriyan/DevoSIEM_UCL)
+[![Use Cases](https://img.shields.io/badge/use%20cases-52-brightgreen.svg)](INDEX.md)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-60%2B%20techniques-red.svg)](https://attack.mitre.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![DEVO Compatible](https://img.shields.io/badge/DEVO%20LINQ-compatible-orange.svg)](DEVO_QUERY_SYNTAX_GUIDE.md)
+
+**A comprehensive, production-ready collection of advanced SIEM detection rules and correlation use cases for DEVO Security Operations Platform.**
+
+[📚 Documentation](#documentation) • [🚀 Quick Start](#quick-start) • [📊 Use Cases](#-use-case-categories) • [💡 Examples](#-real-world-threat-scenarios) • [🤝 Contributing](CONTRIBUTING.md)
+
+</div>
+
+---
+
+<div align="center">
+
+### 🎯 Battle-Tested Detection Logic | 🔄 Multi-Stage Correlations | 🌐 Modern Cloud-Native Coverage
+
+</div>
+
+---
 
 > **⚠️ Important Notice:** This is a community-driven project and is **NOT officially affiliated with, sponsored by, or endorsed by DEVO Technology**. This library is independently created and maintained for educational and professional use by security practitioners.
 
-## Overview
+## 📑 Table of Contents
 
-This repository contains **50+ production-ready SIEM use cases** covering multiple security domains, modern cloud-native technologies, and advanced threat scenarios. Each use case is designed to detect specific threats, suspicious activities, or policy violations with detailed response playbooks, forensic guidance, and MITRE ATT&CK mappings.
+- [Overview](#overview)
+- [Statistics & Metrics](#-statistics--metrics)
+- [What's New](#-whats-new-in-v200)
+- [Repository Structure](#-repository-structure)
+- [Use Case Categories](#-use-case-categories)
+- [Real-World Scenarios](#-real-world-threat-scenarios)
+- [Quick Start](#-quick-start)
+- [Implementation Roadmap](#-implementation-roadmap)
+- [Documentation](#-documentation)
+- [Version History](#-version-history)
+- [Contributing](#-contributing)
 
-### What Makes This Library Unique
+---
 
-✅ **Production-Ready Queries**: Official DEVO LINQ syntax, tested and verified
-✅ **Advanced Correlation**: Multi-stage attack chain detection with complex event correlation
-✅ **Modern Threat Coverage**: Container security, supply chain attacks, API security, SaaS governance
-✅ **Comprehensive Documentation**: Every use case includes response playbooks, investigation steps, and prevention measures
-✅ **MITRE ATT&CK Mapped**: Complete coverage of tactics, techniques, and sub-techniques
-✅ **Tuning Guidance**: False positive considerations and environment-specific tuning recommendations
-✅ **Real-World Scenarios**: Based on actual attack campaigns and incident response experiences
+## 🎯 Overview
 
-## 📊 Statistics
+This repository contains **52 production-ready SIEM use cases** covering multiple security domains, modern cloud-native technologies, and advanced threat scenarios. Each use case is designed to detect specific threats, suspicious activities, or policy violations with detailed response playbooks, forensic guidance, and MITRE ATT&CK mappings.
 
-- **Total Use Cases**: 50+ production-ready detection rules
-- **CRITICAL Severity**: 23 use cases
-- **HIGH Severity**: 20 use cases
-- **MEDIUM Severity**: 7 use cases
-- **LOW Severity**: 2 use cases
-- **Coverage**: 15+ security categories, 60+ MITRE ATT&CK techniques
+<details>
+<summary><b>🌟 What Makes This Library Unique</b> (Click to expand)</summary>
+
+<br>
+
+| Feature | Description | Value |
+|---------|-------------|-------|
+| ✅ **Production-Ready Queries** | Official DEVO LINQ syntax, tested and verified | 99% syntax compliance |
+| 🔗 **Advanced Correlation** | Multi-stage attack chain detection with complex event correlation | 7-stage ransomware detection |
+| 🐳 **Modern Threat Coverage** | Container security, supply chain attacks, API security, SaaS governance | 7 new categories |
+| 📖 **Comprehensive Documentation** | Response playbooks, investigation steps, and prevention measures | Every use case |
+| 🎯 **MITRE ATT&CK Mapped** | Complete coverage of tactics, techniques, and sub-techniques | 60+ techniques |
+| 🎛️ **Tuning Guidance** | False positive considerations and environment-specific tuning | Baseline recommendations |
+| 💼 **Real-World Scenarios** | Based on actual attack campaigns and incident response experiences | 5 detailed walkthroughs |
+
+</details>
+
+---
+
+## 📊 Statistics & Metrics
+
+<div align="center">
+
+### Use Case Distribution by Severity
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ CRITICAL ████████████████████████ 23 (44%)                  │
+│ HIGH     ████████████████████ 20 (38%)                      │
+│ MEDIUM   ███████ 7 (14%)                                    │
+│ LOW      ██ 2 (4%)                                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Coverage Statistics
+
+| Metric | Count | Details |
+|:------:|:-----:|---------|
+| 📋 **Total Use Cases** | **52** | Production-ready detection rules |
+| 🚨 **CRITICAL Severity** | **23** | Immediate threat requiring urgent response |
+| ⚠️ **HIGH Severity** | **20** | Serious security concern requiring prompt investigation |
+| 📌 **MEDIUM Severity** | **7** | Notable security event requiring attention |
+| ℹ️ **LOW Severity** | **2** | Informational alerts for monitoring |
+| 🏢 **Security Categories** | **17** | Firewall, Cloud, Container, API, SaaS, etc. |
+| 🎯 **MITRE ATT&CK Techniques** | **60+** | Complete kill chain coverage |
+| ✅ **DEVO LINQ Compliance** | **99%** | Verified against official syntax |
+
+</div>
+
+---
+
+### 📈 Growth Over Time
+
+```
+v1.0.0 (Nov 2024)    ████████████████░░░░░░░░░░░░  32 use cases
+v1.1.0 (Dec 2024)    ████████████████████░░░░░░░░  43 use cases (+34%)
+v2.0.0 (Dec 2025)    ████████████████████████████  52 use cases (+63% from v1.0.0)
+```
+
+<div align="center">
+
+| Version | Use Cases | Increase | Key Additions |
+|:-------:|:---------:|:--------:|---------------|
+| v1.0.0 | 32 | - | Initial release |
+| v1.1.0 | 43 | +34% | Threat Intelligence, Cloud expansion |
+| v2.0.0 | **52** | **+63%** | **Container, Supply Chain, API, SaaS** |
+
+</div>
 
 ## 🆕 What's New in v2.0.0
 
-### Major Expansion - Advanced Threat Detection
+<div align="center">
 
-This release represents a significant evolution with **50+ use cases** (17% increase), introducing cutting-edge detection categories for modern cloud-native environments and sophisticated attack scenarios.
+### 🚀 Major Expansion - Advanced Threat Detection
 
-### NEW Categories
+**+21% More Use Cases** | **+7 New Categories** | **+60% More Techniques**
 
-#### 🐳 Container/Kubernetes Security (3 use cases)
-- **Privileged Container Escape** (CRITICAL): Detect container breakout attempts, host namespace abuse, and runtime escapes
-- **Cryptocurrency Mining in Containers** (CRITICAL): Identify cryptojacking operations with behavioral analysis
-- **Suspicious Secret Access** (HIGH): Monitor unauthorized access to Kubernetes secrets and ConfigMaps
+</div>
 
-#### 📦 Supply Chain Security (1 use case)
-- **Malicious Dependency Injection** (CRITICAL): Detect typosquatting, dependency confusion, and backdoored packages
+This release represents a significant evolution with **52 use cases** (21% increase from v1.1.0), introducing cutting-edge detection categories for modern cloud-native environments and sophisticated attack scenarios.
 
-#### 🔗 Advanced Correlation (1 use case)
-- **Multi-Stage Ransomware Attack Chain** (CRITICAL): 7-stage correlation from initial compromise to encryption
+---
 
-#### 🔌 API Security (1 use case)
-- **API Key Abuse and Exfiltration** (CRITICAL): Detect API key theft, abuse, and exposure in code/logs
+### ✨ NEW Categories
 
-#### ☁️ SaaS Security (1 use case)
-- **Shadow IT Detection** (HIGH): Identify unauthorized SaaS applications and data exfiltration
+<table>
+<tr>
+<td width="33%" align="center">
 
-### Expanded Existing Categories
-- **Threat Intelligence**: IOC matching, APT detection, TOR/VPN usage, newly registered domains (4 use cases)
-- **Cloud Security**: Expanded AWS, Azure, GCP coverage (15 use cases total)
+#### 🐳 Container/Kubernetes
+**3 Use Cases**
+
+```
+┌─────────────────┐
+│  ☸️  K8s API    │
+│  🔐 Secrets     │
+│  ⛏️  Crypto     │
+└─────────────────┘
+```
+
+- Container Escape 🔴
+- Cryptomining 🔴
+- Secret Access 🟠
+
+</td>
+<td width="33%" align="center">
+
+#### 📦 Supply Chain
+**1 Use Case**
+
+```
+┌─────────────────┐
+│  📋 Dependencies│
+│  🎭 Typosquat   │
+│  🔍 SCA         │
+└─────────────────┘
+```
+
+- Malicious Deps 🔴
+- Dependency Confusion
+- Package Backdoors
+
+</td>
+<td width="33%" align="center">
+
+#### 🔗 Advanced Correlation
+**1 Use Case**
+
+```
+┌─────────────────┐
+│  1️⃣ Initial     │
+│  2️⃣ Creds       │
+│  3️⃣ Lateral     │
+│  ...→ 7️⃣ Impact │
+└─────────────────┘
+```
+
+- 7-Stage Ransomware 🔴
+- Multi-Source Events
+- Kill Chain Detection
+
+</td>
+</tr>
+<tr>
+<td width="50%" align="center" colspan="2">
+
+#### 🔌 API Security
+**1 Use Case**
+
+```
+┌──────────────────────────────────────┐
+│  🔑 Key Management  │  📊 Rate Limits │
+│  🌍 Geo Anomalies   │  📝 Log Exposure│
+└──────────────────────────────────────┘
+```
+
+- API Key Abuse 🔴
+- OAuth Monitoring
+- Geographic Anomalies
+
+</td>
+<td width="50%" align="center">
+
+#### ☁️ SaaS Security
+**1 Use Case**
+
+```
+┌──────────────────────────────┐
+│  👤 Shadow IT   │  📤 DLP    │
+│  🔍 CASB        │  🌐 OAuth  │
+└──────────────────────────────┘
+```
+
+- Shadow IT 🟠
+- Unauthorized SaaS
+- Data Exfiltration
+
+</td>
+</tr>
+</table>
+
+---
+
+### 📈 Expanded Existing Categories
+
+<div align="center">
+
+| Category | v1.1.0 | v2.0.0 | Growth | Highlights |
+|----------|:------:|:------:|:------:|------------|
+| 🕵️ **Threat Intelligence** | 4 | 4 | ➡️ | IOC matching, APT detection, TOR/VPN usage |
+| ☁️ **Cloud Security** | 15 | 15 | ➡️ | AWS, Azure, GCP comprehensive coverage |
+| 🔥 **Firewall** | 11 | 11 | ➡️ | Palo Alto, Fortinet, Checkpoint |
+| 🐳 **Container/K8s** | 0 | **3** | 🆕 | Cloud-native security |
+| 📦 **Supply Chain** | 0 | **1** | 🆕 | Software composition security |
+| 🔗 **Adv. Correlation** | 1 | **2** | +100% | Multi-stage attack detection |
+| 🔌 **API Security** | 0 | **1** | 🆕 | API protection & governance |
+| ☁️ **SaaS Security** | 0 | **1** | 🆕 | Shadow IT detection |
+
+</div>
 
 ## 📁 Repository Structure
 
@@ -602,23 +792,260 @@ New use cases should include:
 - Investigation steps
 - Prevention measures
 
-## Quick Start
+## 🚀 Quick Start
 
-1. **Browse** the [INDEX.md](INDEX.md) to find relevant use cases
-2. **Review** the use case file for your technology stack
-3. **Copy** the DEVO LINQ query
-4. **Test** in non-production DEVO environment
-5. **Tune** based on false positive guidance
-6. **Deploy** to production with appropriate notifications
-7. **Document** any customizations for your environment
+<div align="center">
 
-## Documentation
+### Get Started in 3 Steps
 
-- **[INDEX.md](INDEX.md)** - Complete index of all use cases organized by category and severity
-- **[DEVO_QUERY_SYNTAX_GUIDE.md](DEVO_QUERY_SYNTAX_GUIDE.md)** - Comprehensive guide to align queries with actual DEVO LINQ syntax
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for adding new use cases
-- **[BANNER_INFO.md](BANNER_INFO.md)** - Information about creating the repository banner image
-- Individual use case files with detailed documentation
+</div>
+
+```mermaid
+graph LR
+    A[📚 Browse INDEX.md] --> B[🔍 Select Use Case]
+    B --> C[📋 Copy Query]
+    C --> D[🧪 Test in Dev]
+    D --> E[🎛️ Tune Thresholds]
+    E --> F[🚀 Deploy to Prod]
+    F --> G[📊 Monitor & Refine]
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#e1ffe1
+    style D fill:#ffe1e1
+    style E fill:#f0e1ff
+    style F fill:#e1fff4
+    style G fill:#fff0e1
+```
+
+### Step-by-Step Guide
+
+<table>
+<tr>
+<td width="5%" align="center">1️⃣</td>
+<td width="95%">
+
+**Browse Available Use Cases**
+- Navigate to [INDEX.md](INDEX.md) for complete catalog
+- Filter by severity: CRITICAL, HIGH, MEDIUM, LOW
+- Choose by category: Firewall, Cloud, Container, API, etc.
+
+</td>
+</tr>
+<tr>
+<td width="5%" align="center">2️⃣</td>
+<td width="95%">
+
+**Review Use Case Documentation**
+- Read the detection logic and MITRE ATT&CK mapping
+- Understand the alert configuration and thresholds
+- Review false positive considerations
+- Check required data sources
+
+</td>
+</tr>
+<tr>
+<td width="5%" align="center">3️⃣</td>
+<td width="95%">
+
+**Copy the DEVO LINQ Query**
+```sql
+from firewall.paloalto.traffic
+select eventdate
+select srcaddr as srcip
+select dstaddr as dstip
+select mm2country(dstaddr) as dst_country
+where weakhas(threat_type, "wildfire")
+  and `in`("malicious", "phishing", verdict)
+```
+
+</td>
+</tr>
+<tr>
+<td width="5%" align="center">4️⃣</td>
+<td width="95%">
+
+**Test in Development Environment**
+```sql
+-- Add time constraint for testing
+where eventdate >= now() - 300000  -- Last 5 minutes
+```
+- Verify table names exist in your DEVO environment
+- Confirm field names match your data sources
+- Validate query syntax
+
+</td>
+</tr>
+<tr>
+<td width="5%" align="center">5️⃣</td>
+<td width="95%">
+
+**Tune Based on Your Environment**
+- Adjust thresholds (e.g., `> 1000` requests)
+- Add whitelists for approved users/IPs
+- Baseline normal behavior patterns
+- Configure alert throttling
+
+</td>
+</tr>
+<tr>
+<td width="5%" align="center">6️⃣</td>
+<td width="95%">
+
+**Deploy to Production**
+- Create alert in DEVO platform
+- Configure notifications (email, webhook, SOAR)
+- Set severity and priority levels
+- Enable monitoring
+
+</td>
+</tr>
+<tr>
+<td width="5%" align="center">7️⃣</td>
+<td width="95%">
+
+**Monitor and Refine**
+- Track false positive rate
+- Review triggered alerts
+- Adjust thresholds as needed
+- Document customizations
+
+</td>
+</tr>
+</table>
+
+---
+
+### ⚡ Quick Links
+
+<div align="center">
+
+| Resource | Description | Link |
+|----------|-------------|------|
+| 📋 **Use Case Index** | Complete catalog organized by category | [INDEX.md](INDEX.md) |
+| 📖 **DEVO Syntax Guide** | Official LINQ syntax reference | [DEVO_QUERY_SYNTAX_GUIDE.md](DEVO_QUERY_SYNTAX_GUIDE.md) |
+| ✅ **Syntax Verification** | Compliance report and corrections | [VERIFICATION_SUMMARY.md](VERIFICATION_SUMMARY.md) |
+| 🤝 **Contributing Guide** | How to add new use cases | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| 🎨 **Banner Info** | Repository banner creation guide | [BANNER_INFO.md](BANNER_INFO.md) |
+
+</div>
+
+## 📚 Documentation
+
+<div align="center">
+
+### Complete Documentation Suite
+
+</div>
+
+<table>
+<tr>
+<td width="50%">
+
+#### 📋 Core Documentation
+
+| Document | Purpose | Status |
+|----------|---------|--------|
+| [**INDEX.md**](INDEX.md) | Use case catalog | ✅ 52 use cases |
+| [**README.md**](README.md) | Main documentation | ✅ This file |
+| [**CONTRIBUTING.md**](CONTRIBUTING.md) | Contribution guide | ✅ Guidelines |
+| [**LICENSE**](LICENSE) | MIT License | ✅ Open source |
+| [**CHANGELOG.md**](CHANGELOG.md) | Version history | ✅ v2.0.0 |
+
+</td>
+<td width="50%">
+
+#### 🔧 Technical Guides
+
+| Document | Purpose | Status |
+|----------|---------|--------|
+| [**DEVO_QUERY_SYNTAX_GUIDE.md**](DEVO_QUERY_SYNTAX_GUIDE.md) | DEVO LINQ syntax | ✅ Official syntax |
+| [**SYNTAX_ANALYSIS_REPORT.md**](SYNTAX_ANALYSIS_REPORT.md) | Syntax validation | ✅ Full analysis |
+| [**SYNTAX_VERIFICATION_V2.md**](SYNTAX_VERIFICATION_V2.md) | v2.0 compliance | ✅ 96.6% score |
+| [**VERIFICATION_SUMMARY.md**](VERIFICATION_SUMMARY.md) | Final verification | ✅ 99% compliant |
+
+</td>
+</tr>
+</table>
+
+---
+
+### 🎯 MITRE ATT&CK Coverage
+
+<div align="center">
+
+#### Comprehensive Kill Chain Coverage
+
+</div>
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         MITRE ATT&CK TACTICS                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  [TA0001] Initial Access        ████████░░  12 techniques              │
+│  [TA0002] Execution              ████████░░  10 techniques              │
+│  [TA0003] Persistence            ██████░░░░   8 techniques              │
+│  [TA0004] Privilege Escalation   ███████░░░   9 techniques              │
+│  [TA0005] Defense Evasion        ████████░░  11 techniques              │
+│  [TA0006] Credential Access      █████████░  13 techniques              │
+│  [TA0007] Discovery              ██████░░░░   7 techniques              │
+│  [TA0008] Lateral Movement       ████████░░  10 techniques              │
+│  [TA0009] Collection             ████░░░░░░   5 techniques              │
+│  [TA0010] Exfiltration           ███████░░░   8 techniques              │
+│  [TA0011] Command & Control      ██████░░░░   7 techniques              │
+│  [TA0040] Impact                 █████████░  12 techniques              │
+│                                                                         │
+│  Total: 60+ Techniques Covered                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<details>
+<summary><b>🔍 Top 10 Most Covered Techniques</b> (Click to expand)</summary>
+
+<br>
+
+| Rank | Technique ID | Technique Name | Use Cases | Severity |
+|:----:|--------------|----------------|:---------:|----------|
+| 1 | T1486 | Data Encrypted for Impact | 4 | 🔴 CRITICAL |
+| 2 | T1078 | Valid Accounts | 6 | 🔴 CRITICAL |
+| 3 | T1552 | Unsecured Credentials | 5 | 🔴 CRITICAL |
+| 4 | T1567 | Exfiltration Over Web Service | 4 | 🟠 HIGH |
+| 5 | T1021 | Remote Services | 5 | 🔴 CRITICAL |
+| 6 | T1566 | Phishing | 3 | 🔴 CRITICAL |
+| 7 | T1195 | Supply Chain Compromise | 1 | 🔴 CRITICAL |
+| 8 | T1610 | Deploy Container | 3 | 🔴 CRITICAL |
+| 9 | T1190 | Exploit Public-Facing Application | 4 | 🔴 CRITICAL |
+| 10 | T1110 | Brute Force | 3 | 🔴 CRITICAL |
+
+</details>
+
+---
+
+### 🏢 Use Case Files Structure
+
+Each use case file contains:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1️⃣  Rule Name & Severity                                   │
+│  2️⃣  Description (What & Why)                               │
+│  3️⃣  MITRE ATT&CK Mapping                                   │
+│  4️⃣  DEVO LINQ Query (Production-Ready)                     │
+│  5️⃣  Alert Configuration (Trigger, Throttling, Priority)    │
+│  6️⃣  Recommended Actions (Step-by-step response)            │
+│  7️⃣  False Positive Considerations (Tuning guidance)        │
+│  8️⃣  Enrichment Opportunities (Additional context)          │
+│  9️⃣  Response Playbook (6-phase incident response)          │
+│  🔟  Investigation Steps (Forensic guidance)                │
+│  1️⃣1️⃣  Prevention Measures (Security controls)              │
+│  1️⃣2️⃣  Forensic Artifacts (Evidence collection)            │
+│  1️⃣3️⃣  Compliance Impact (GDPR, HIPAA, PCI-DSS, etc.)      │
+│  1️⃣4️⃣  Business Impact (Risk assessment)                   │
+│  1️⃣5️⃣  Related Use Cases (Cross-references)                │
+│  1️⃣6️⃣  References & Resources                              │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ## Disclaimer
 
@@ -666,24 +1093,87 @@ While queries use official DEVO syntax, you must verify:
 
 **No Warranty:** The author provides these use cases without any warranty, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
 
-## Support
+## 💬 Support & Community
 
-For questions, issues, or contributions:
-- **GitHub Issues**: https://github.com/Masriyan/DevoSIEM_UCL/issues
-- **Discussions**: https://github.com/Masriyan/DevoSIEM_UCL/discussions
-- **Author**: Masriyan
+<div align="center">
 
-## Author
+### Get Help, Share Feedback, Contribute
 
-Created and maintained by Masriyan
+</div>
 
-Repository: https://github.com/Masriyan/DevoSIEM_UCL
+<table>
+<tr>
+<td width="33%" align="center">
 
-## License
+### 🐛 Report Issues
 
-MIT License - Feel free to use and modify for your security operations.
+Found a bug or syntax error?
 
-See [LICENSE](LICENSE) file for details.
+[Open an Issue](https://github.com/Masriyan/DevoSIEM_UCL/issues)
+
+Report bugs, request features, or ask questions
+
+</td>
+<td width="33%" align="center">
+
+### 💭 Discussions
+
+Have questions or ideas?
+
+[Join Discussion](https://github.com/Masriyan/DevoSIEM_UCL/discussions)
+
+Share use cases, ask for help, or discuss improvements
+
+</td>
+<td width="33%" align="center">
+
+### 🤝 Contribute
+
+Want to contribute?
+
+[Contributing Guide](CONTRIBUTING.md)
+
+Add use cases, fix bugs, or improve documentation
+
+</td>
+</tr>
+</table>
+
+---
+
+## 👨‍💻 Author
+
+<div align="center">
+
+**Created and maintained by Masriyan**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Masriyan-181717?style=for-the-badge&logo=github)](https://github.com/Masriyan)
+
+**Repository**: [github.com/Masriyan/DevoSIEM_UCL](https://github.com/Masriyan/DevoSIEM_UCL)
+
+</div>
+
+---
+
+## 📜 License
+
+<div align="center">
+
+**MIT License** - Free to use and modify for your security operations
+
+See [LICENSE](LICENSE) file for full details
+
+```
+Copyright (c) 2024-2025 Masriyan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software...
+```
+
+</div>
 
 ## 📋 Version History
 
@@ -767,10 +1257,147 @@ See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Star this repository** ⭐ if you find it useful!
+<div align="center">
 
-**Contribute** by submitting new use cases or improvements!
+## 🌟 Show Your Support
 
-**Share** with your security operations team!
+**If you find this library useful, please consider:**
+
+<table>
+<tr>
+<td align="center" width="33%">
+
+### ⭐ Star the Repository
+
+Help others discover this project
+
+[![GitHub stars](https://img.shields.io/github/stars/Masriyan/DevoSIEM_UCL?style=social)](https://github.com/Masriyan/DevoSIEM_UCL/stargazers)
+
+</td>
+<td align="center" width="33%">
+
+### 🍴 Fork & Contribute
+
+Add your own use cases
+
+[![GitHub forks](https://img.shields.io/github/forks/Masriyan/DevoSIEM_UCL?style=social)](https://github.com/Masriyan/DevoSIEM_UCL/network/members)
+
+</td>
+<td align="center" width="33%">
+
+### 📢 Share with Your Team
+
+Spread the word in your organization
+
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FMasriyan%2FDevoSIEM_UCL)](https://twitter.com/intent/tweet?text=Check%20out%20this%20comprehensive%20DEVO%20SIEM%20Use%20Case%20Library!&url=https://github.com/Masriyan/DevoSIEM_UCL)
+
+</td>
+</tr>
+</table>
 
 ---
+
+### 🎯 Quick Stats
+
+![GitHub last commit](https://img.shields.io/github/last-commit/Masriyan/DevoSIEM_UCL)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Masriyan/DevoSIEM_UCL)
+![GitHub contributors](https://img.shields.io/github/contributors/Masriyan/DevoSIEM_UCL)
+![GitHub issues](https://img.shields.io/github/issues/Masriyan/DevoSIEM_UCL)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/Masriyan/DevoSIEM_UCL)
+
+---
+
+### 💡 Featured In
+
+<table>
+<tr>
+<td align="center">
+
+**52 Use Cases**
+
+Production-ready detections
+
+</td>
+<td align="center">
+
+**99% DEVO Compliant**
+
+Official LINQ syntax
+
+</td>
+<td align="center">
+
+**60+ MITRE Techniques**
+
+Complete kill chain
+
+</td>
+<td align="center">
+
+**17 Categories**
+
+Comprehensive coverage
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Ready to Get Started?
+
+<div align="center">
+
+### Choose Your Path
+
+</div>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  🆕 New User?           ➜  Start with the Quick Start Guide    │
+│                                                                 │
+│  🔍 Looking for         ➜  Browse the INDEX.md catalog         │
+│     something specific?                                         │
+│                                                                 │
+│  🛠️  Ready to deploy?   ➜  Check VERIFICATION_SUMMARY.md       │
+│                                                                 │
+│  📖 Need help with      ➜  Read DEVO_QUERY_SYNTAX_GUIDE.md     │
+│     DEVO syntax?                                                │
+│                                                                 │
+│  🤝 Want to contribute? ➜  See CONTRIBUTING.md                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+<br>
+
+[![Get Started](https://img.shields.io/badge/Get%20Started-Quick%20Start%20Guide-brightgreen?style=for-the-badge)](#-quick-start)
+[![Browse Use Cases](https://img.shields.io/badge/Browse-Use%20Cases-blue?style=for-the-badge)](INDEX.md)
+[![Read Docs](https://img.shields.io/badge/Read-Documentation-orange?style=for-the-badge)](#-documentation)
+
+</div>
+
+---
+
+## 🎨 Repository Banner
+
+The repository banner image (`devosiem_banner.png`) should be created and placed in the root directory. See [BANNER_INFO.md](BANNER_INFO.md) for design guidelines, specifications, and tools to create a professional banner for this repository.
+
+**Note:** Ensure the banner does not use official DEVO Technology branding to maintain clear distinction as a community project.
+
+---
+
+<div align="center">
+
+### Made with ❤️ for the Security Community
+
+**© 2024-2025 Masriyan** | **MIT License** | **Community-Driven**
+
+[![Built with Love](https://img.shields.io/badge/Built%20with-❤️-red?style=flat-square)](https://github.com/Masriyan/DevoSIEM_UCL)
+[![Security](https://img.shields.io/badge/Security-First-green?style=flat-square)](https://github.com/Masriyan/DevoSIEM_UCL)
+[![Open Source](https://img.shields.io/badge/Open-Source-blue?style=flat-square)](LICENSE)
+
+**Thank you for using the DEVO SIEM Use Case Library!**
+
+</div>

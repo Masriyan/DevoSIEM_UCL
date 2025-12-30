@@ -23,12 +23,12 @@ select event_type as initial_vector
 where (
     -- Phishing with macro execution
     (event_type = "email_delivered"
-     and attachment_type in ("doc", "docm", "xls", "xlsm")
+     and `in`("doc", "docm", "xls", "xlsm", attachment_type)
      and attachment_macro_detected = true)
 
     -- Exploit of public-facing application
     or (event_type = "web_attack"
-        and (attack_type in ("rce", "file_upload", "deserialization")
+        and (`in`("rce", "file_upload", "deserialization", attack_type)
              or cvss_score > 9.0))
 
     -- RDP brute force success
@@ -38,7 +38,7 @@ where (
 
     -- VPN/Remote access compromise
     or (event_type = "vpn_login"
-        and (mm2country(src_ip) in ("CN", "RU", "KP", "IR")
+        and (`in`("CN", "RU", "KP", "IR", mm2country(src_ip))
              or impossible_travel = true))
   )
 
@@ -83,24 +83,24 @@ join network.authentication lateral_auth
   and lateral_auth.eventdate > cred_dump.eventdate
   and lateral_auth.eventdate < cred_dump.eventdate + 2h
   and lateral_auth.hostname != initial_compromise.patient_zero
-where lateral_auth.protocol in ("smb", "wmi", "rdp", "psexec")
+where `in`("smb", "wmi", "rdp", "psexec", lateral_auth.protocol)
   and lateral_auth.result = "success"
 
 -- Stage 5: Data Exfiltration (Double Extortion)
 join network.connections exfil
-  on exfil.src_hostname in (initial_compromise.patient_zero, lateral_auth.hostname)
+  on `in`(initial_compromise.patient_zero, lateral_auth.hostname, exfil.src_hostname)
   and exfil.eventdate > lateral_auth.eventdate
   and exfil.eventdate < lateral_auth.eventdate + 4h
 where (
-    exfil.dst_port in (443, 80, 22, 21)
+    `in`(443, 80, 22, 21, exfil.dst_port)
     and exfil.bytes_sent > 1073741824  -- 1 GB
     and purpose(exfil.dst_ip) = "external"
-    and mm2country(exfil.dst_ip) not in ("US", "CA", "GB", "DE", "FR")  -- Adjust for your country
+    and not `in`("US", "CA", "GB", "DE", "FR", mm2country(exfil.dst_ip))  -- Adjust for your country
   )
 
 -- Stage 6: Backup/Recovery Deletion
 join edr.process_creation backup_delete
-  on backup_delete.hostname in (initial_compromise.patient_zero, lateral_auth.hostname)
+  on `in`(initial_compromise.patient_zero, lateral_auth.hostname, backup_delete.hostname)
   and backup_delete.eventdate > exfil.eventdate
   and backup_delete.eventdate < exfil.eventdate + 1h
 where (
@@ -115,14 +115,14 @@ where (
 
 -- Stage 7: Ransomware Encryption (Final Stage)
 join edr.file_activity encryption
-  on encryption.hostname in (initial_compromise.patient_zero, lateral_auth.hostname)
+  on `in`(initial_compromise.patient_zero, lateral_auth.hostname, encryption.hostname)
   and encryption.eventdate > backup_delete.eventdate
   and encryption.eventdate < backup_delete.eventdate + 30m
 where encryption.action = "modify"
   and (
     encryption.files_modified_count > 50 in 5m
     or encryption.file_entropy > 7.5
-    or encryption.file_extension in (".encrypted", ".locked", ".crypto", ".crypt")
+    or `in`(".encrypted", ".locked", ".crypto", ".crypt", encryption.file_extension)
     or weakhas(encryption.filename, "README")
     or weakhas(encryption.filename, "DECRYPT")
     or weakhas(encryption.filename, "HOW_TO_RECOVER")
